@@ -1,0 +1,16 @@
+// Custom.scss
+// Option A: Include all of Bootstrap
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+// Include any default variable overrides here (though functions won't be available)
+
+$primary: #1A2517;
+$secondary: #ACC8A2;
+$background: #F5F0E8;
+$words: #C9A96E;
+$menuBG: #FEFCF8;
+$font-family-base: "Playfair Display SC", sans-serif;
+$headings-font-family: "Plus Jakarta Sans", serif;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
