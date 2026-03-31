@@ -1,2 +1,324 @@
 @import url("/node_modules/bootstrap-icons/font/bootstrap-icons.css");
 @import 'custom';
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+main {
+    margin-top: 5px;
+    margin-bottom: 250px;
+}
+
+footer.footer{
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.hero-scene {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Carrousel prend tout l'espace en fond */
+.hero-carousel {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.hero-carousel .carousel-inner,
+.hero-carousel .carousel-item {
+    height: 100%;
+}
+
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Overlay sombre */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: 1;
+}
+
+/* Contenu par-dessus tout */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+}
+
+.hero-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.btn-hero {
+    background-color: #c8a96e;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+}
+
+.btn-hero:hover {
+    background-color: #b8935a;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .hero-scene {
+        height: 50vh;
+    }
+
+    .hero-text {
+        font-size: 1.3rem;
+    }
+}
+.carousel-img {
+    object-fit: cover;
+    height: 450px;
+}
+
+
+.carousel-galerie {
+    margin: 3em auto;
+    overflow: auto;
+    width: 100%;
+    display: flex;
+    scroll-behavior: smooth;
+    gap: 1em;
+    anchor-name: --carouselGalerie;
+    scroll-snap-type: x mandatory;
+    scroll-marker-group: after;
+}
+
+.carousel-galerie::scroll-marker-group{
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+}
+
+
+.carousel-galerie::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-galerie::scroll-button(right) {
+    content: '⮊';
+    color: var(--bs-primary);
+    border:none;
+    background-color: var(--bs-secondary);
+    font-family: Consolas;
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+    padding-bottom: .1em;
+    font-size: 3em;
+    cursor: pointer;
+    position: fixed;
+    position-anchor: --carouselGalerie;
+    position-area: right center;
+    translate: -50%;
+}
+
+.carousel-galerie::scroll-button(left) {
+    content: '⮈';
+    color: var(--bs-primary);
+    border:none;
+    background-color: var(--bs-secondary);
+    font-family: Consolas;
+    height: 60px;
+    width: 60px;
+    border-radius: 50px;
+    padding-bottom: .1em;
+    font-size: 3em;
+    cursor: pointer;
+    position: fixed;
+    position-anchor: --carouselGalerie;
+    position-area: left center;
+    translate: 50%;
+
+}
+
+.carousel-galerie::scroll-button(right):disabled, .carousel-galerie::scroll-button(left):disabled {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.card {
+    scroll-snap-align: start;
+    flex: 0 0 20em;
+    aspect-ratio: 5 / 3;
+    background-color: var(--bs-primary);
+    padding: 1em;
+    border-radius: .5em;
+    text-align: center;
+    align-content: center;
+     img {
+        width: 100%;
+        height: 200px;
+        border-radius: 5%;
+        object-fit: cover;
+    }
+}
+
+.card::scroll-marker {
+    content: '';
+    height: 1em;
+    width: 1em;
+    background-color: var(--bs-primary);
+    border-radius: 50%;
+}
+
+.card::scroll-marker:target-current{
+    background-color: var(--bs-secondary);
+}
+
+@media(max-width: 500px) {
+    .card {
+        flex: 0 0 100%;
+    }
+}
+
+
+.info {
+    margin-top: 30px;
+    height: 420px;
+    background-color: var(--bs-primary);
+}
+
+.menu-tag-info {
+    background-color: var(--bs-secondary);
+    opacity: 80%;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.galerie-tag {
+    background-color: rgba(255, 255, 255, 0.15);
+    opacity: 80%;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.carousel-info {
+    margin: -5px auto 0 auto;
+    border: 5px solid var(--bs-secondary);
+    width: 90%;
+    display: flex;
+    overflow-x: auto;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    animation: spin 10s infinite linear;
+}
+
+.images-info {
+    height: 300px;
+    align-content: center;
+}
+
+@keyframes spin {
+    from {translate: 0;}
+    to {translate: -100%;}
+}
+
+
+.carousel-info::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-info::scroll-marker-group{
+    display: flex;
+    justify-content: center;
+    gap: .5em;
+}
+
+.images-info::scroll-marker {
+    content: '';
+    height: 1em;
+    width: 1em;
+    background-color: var(--bs-primary);
+    border-radius: 50%;
+}
+
+.images-info::scroll-marker:target-current{
+    background-color: var(--bs-secondary);
+}
+
+.h2-menu {
+    padding-top: 100px;
+}
+
+
+.cards-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.menu-card {
+    flex: 1;
+    min-width: 250px;
+    background-color: var(--bs-dark);
+    border-radius: 16px;
+    overflow: hidden;
+    color: white;
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+}
+
+.menu-card-body {
+    padding: 1rem;
+
+    p {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+        margin-top: 0.8rem;
+        margin-bottom: 0;
+    }
+}
+
+.menu-tag {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
