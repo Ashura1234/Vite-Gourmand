@@ -2,19 +2,22 @@
 @import 'custom';
 
 html {
-    position: relative;
     min-height: 100%;
 }
 
-main {
-    margin-top: 5px;
-    margin-bottom: 250px;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-footer.footer{
+main {
+    flex: 1;
+    margin-top: 5px;
+}
+
+footer.footer {
     padding: 15px;
-    position: absolute;
-    bottom: 0;
     width: 100%;
 }
 
@@ -206,7 +209,7 @@ footer.footer{
 }
 
 .menu-tag-info {
-    background-color: var(--bs-secondary);
+    background-color: #b8935a;
     opacity: 80%;
     border-radius: 20px;
     padding: 0.3rem 0.8rem;
@@ -216,7 +219,7 @@ footer.footer{
 }
 
 .galerie-tag {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--bs-primary);
     opacity: 80%;
     border-radius: 20px;
     padding: 0.3rem 0.8rem;
@@ -231,6 +234,7 @@ footer.footer{
     width: 90%;
     display: flex;
     overflow-x: auto;
+    overflow: hidden;
 }
 
 .group {
@@ -254,33 +258,29 @@ footer.footer{
     display: none;
 }
 
-.carousel-info::scroll-marker-group{
-    display: flex;
-    justify-content: center;
-    gap: .5em;
+@media (max-width: 768px) {
+    .carousel-info {
+        height: 250px;
+    }
+
+    .images-info {
+        height: 250px;
+    }
 }
 
-.images-info::scroll-marker {
-    content: '';
-    height: 1em;
-    width: 1em;
-    background-color: var(--bs-primary);
-    border-radius: 50%;
-}
-
-.images-info::scroll-marker:target-current{
-    background-color: var(--bs-secondary);
-}
-
-.h2-menu {
+.hr {
     padding-top: 100px;
+    clear: both;
+    margin-top: 2rem;
 }
-
 
 .cards-wrapper {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
+     .menu-card {
+        flex: 1 1 250px;
+    }
 }
 
 .menu-card {
@@ -305,6 +305,11 @@ footer.footer{
 
 .menu-card-body {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    .menu-tag1 {
+        align-self: flex-end;
+    }
 
     p {
         color: rgba(255, 255, 255, 0.7);
@@ -315,6 +320,21 @@ footer.footer{
 }
 
 .menu-tag {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.8rem;
+}
+
+.btn-carte {
+    background-color: var(--bs-primary);
+    align-content: center;
+    padding-bottom: 100px;
+}
+
+.menu-tag1 {
     background-color: rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     padding: 0.3rem 0.8rem;
