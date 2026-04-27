@@ -87,9 +87,47 @@
         </div>
 
         <div class="detail-commander">
-          <a href="#" class="btn btn-hero btn-commander">Commander</a>
+          <a href="#" class="btn btn-hero btn-commander" data-bs-toggle="modal" data-bs-target="#modalCommander">Commander</a>
         </div>
       </div>
     </div>
+    <div class="modal fade" id="modalCommander" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content modal-commande">
+  
+              <div class="modal-img-wrapper">
+                  <img src="../images/brunchMenu.jpg" class="modal-img" alt="Menu"/>
+              </div>
+  
+              <div class="modal-body modal-commande-body">
+  
+                  <h4 class="text-white fw-bold">Menu Classique Automne</h4>
+  
+                  <div class="d-flex gap-2 mt-2 mb-4">
+                      <span class="modal-badge">
+                          <i class="bi bi-person-fill"></i> 30€
+                      </span>
+                      <span class="modal-badge">
+                          <i class="bi bi-box-seam"></i> 14 en stock
+                      </span>
+                  </div>
+  
+                  <div class="d-flex flex-column gap-3">
+                      <input type="date" class="modal-input" placeholder="Date de prestation..."/>
+                      <input type="time" class="modal-input" placeholder="Heure de livraison"/>
+                      <input type="number" class="modal-input" placeholder="Nombre de personnes (minimum imposé par le menu)" min="1"/>
+                      <div class="d-flex align-items-center gap-3">
+                          <input type="checkbox" class="modal-checkbox" id="materiel"/>
+                          <label for="materiel" class="modal-input flex-grow-1 mb-0">prêt matériel</label>
+                      </div>
+                  </div>
+  
+                  <div class="text-center mt-4">
+                      <button class="btn btn-hero btn-commander">Valider et payer</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
   </body>
 </html>

@@ -371,6 +371,10 @@ footer.footer {
   gap: 1rem;
 }
 
+.text-dropdown{
+  font-size: 25px;
+}
+
 .price-input {
   width: 100%;
   display: flex;
@@ -620,4 +624,74 @@ footer.footer {
 
 .img-marker::scroll-marker:target-current {
   background-color: var(--bs-secondary);
+}
+
+//Payement
+
+.modal-commande {
+    background-color: var(--bs-dark);
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+}
+
+.modal-img-wrapper {
+    position: relative;
+}
+
+.modal-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.modal-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 0;
+    background-color: var(--bs-dark);
+}
+
+.modal-commande-body {
+    background-color: var(--bs-dark);
+    padding: 1.2rem 1.5rem;
+}
+
+.modal-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.modal-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    color: white;
+    width: 100%;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+}
+
+.modal-checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    accent-color: var(--bs-primary);
 }

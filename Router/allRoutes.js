@@ -14,5 +14,7 @@ export const allRoutes = [
     new Route("/menuSushi", "Menu Sushi", "/pages/menu/menuSushi.html"),
     new Route("/menuEntreprise", "Menu Entreprise", "/pages/menu/MenuEntreprise.html"),
     new Route("/menuPoisson", "Menu Poisson", "/pages/menu/menuPoisson.html"),
+    new Route("/connexion", "Connexion", "/pages/auth/connexion.html"),
+    new Route("/inscription", "Inscription", "/pages/auth/inscription.html"),
 ];
 export const websiteName = "Vite & Gourmand";

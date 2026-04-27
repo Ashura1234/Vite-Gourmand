@@ -6,55 +6,56 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container pt-4 filtre-tag">
+ <div class="container-fluid p-4 filtre-wrapper">
+    <div class="filtre-tag">
         <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-circle-square"></i>
-                Thème
-            </i>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Exemple de thème</a></li>
-            <li><a class="dropdown-item" href="#">Exemple de thème</a></li>
-            <li><a class="dropdown-item" href="#">Exemple de thème</a></li>
-        </ul>
-    </div>
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Prix €
-        </i>
-    </button>
-    <ul class="dropdown-menu bg-secondary">
-        <li><div class="price-input">
-            <div class="field">
-                <span>Min</span>
-                <input type="number" class="input-min" value="20">
-            </div>
-            <div class="separator">-</div>
-            <div class="field">
-                <span>Max</span>
-                <input type="number" class="input-max" value="50">
-            </div>
-            <div class="slider-bar">
-                <div class="progress">
-                </div>
-            </div>
+            <button class="btn filtre-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-grid-fill filtre-icon"></i>
+                <span class="text-dropdown">Thème</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Bordelais</a></li>
+                <li><a class="dropdown-item" href="#">Printanier</a></li>
+                <li><a class="dropdown-item" href="#">Prestige</a></li>
+            </ul>
         </div>
-    </li>
-    </ul>
-</div>
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-people-fill"></i>
-            Nombre de personne
-    </button>
-    <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-    </ul>
-</div>
+
+        <div class="dropdown">
+            <button class="btn filtre-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-currency-euro filtre-icon"></i>
+                <span class="text-dropdown">Prix</span>
+            </button>
+            <ul class="dropdown-menu p-3" style="min-width: 250px;">
+                <li>
+                    <div class="price-input">
+                        <div class="field">
+                            <span>Min</span>
+                            <input type="number" class="input-min" value="20">
+                        </div>
+                        <div class="separator">-</div>
+                        <div class="field">
+                            <span>Max</span>
+                            <input type="number" class="input-max" value="50">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="dropdown">
+            <button class="btn filtre-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-people-fill filtre-icon"></i>
+                <span class="text-dropdown">Personnes</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">1 - 2 personnes</a></li>
+                <li><a class="dropdown-item" href="#">3 - 5 personnes</a></li>
+                <li><a class="dropdown-item" href="#">6 - 10 personnes</a></li>
+                <li><a class="dropdown-item" href="#">10+ personnes</a></li>
+            </ul>
+        </div>
     </div>
+</div>
     <section class="container-fluid p-4 section-menu">
     <h2 class="text-primary mb-4 h2-menu"><i class="bi bi-fork-knife"></i>Nos menus</h2>
     <div class="cards-wrapper">
