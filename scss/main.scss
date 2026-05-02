@@ -32,6 +32,59 @@ footer.footer {
   width: 100%;
 }
 
+// Modale responsive
+.modal-commande {
+    background-color: var(--bs-dark);
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+
+    @media (max-width: 576px) {
+        border-radius: 0;
+    }
+}
+
+.modal-commande-body {
+    background-color: var(--bs-dark);
+    padding: 1.2rem 1.5rem;
+
+    @media (max-width: 576px) {
+        padding: 1rem;
+
+        // Les 2 colonnes passent en 1 sur mobile
+        .row .col-6 {
+            width: 100%;
+        }
+    }
+}
+
+.modal-input {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    color: white;
+    width: 100%;
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    &:focus {
+        outline: 2px solid var(--bs-primary);
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    option {
+        background-color: var(--bs-dark);
+        color: white;
+    }
+}
+
+textarea.modal-input {
+    resize: none;
+}
+
 .hero-scene {
   position: relative;
   width: 100%;
@@ -181,9 +234,10 @@ footer.footer {
   scroll-snap-align: start;
   flex: 0 0 20em;
   aspect-ratio: 5 / 3;
-  background-color: var(--bs-primary);
+  background-color: white;
+   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   padding: 1em;
-  border-radius: 0.5em;
+  border-radius: 20px;
   text-align: center;
   align-content: center;
   img {
@@ -694,4 +748,35 @@ footer.footer {
     cursor: pointer;
     flex-shrink: 0;
     accent-color: var(--bs-primary);
+}
+
+.auth-bg {
+    background-image: url('../images/chefImg.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    margin-bottom: 5px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.55);
+    }
+}
+
+.auth {
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    max-width: 450px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }

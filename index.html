@@ -1,105 +1,212 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-     <link rel="stylesheet" href="scss/main.css">
-    <title>Vite & Gourmand </title>
-</head>
-<body>
-        <header>
-            <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-    <div class="container">
-        <a class="navbar-brand" href="/" onclick="route(event)">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="scss/main.css" />
+    <title>Vite & Gourmand</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand" href="/" onclick="route(event)">
             Vite & Gourmand
-        </a>
+          </a>
 
-        <!-- Bouton hamburger mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
             <span class="navbar-toggler-icon"></span>
-        </button>
+          </button>
 
-        <!-- Liens -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/Vite-Gourmand/front/" onclick="route(event)">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/menu" onclick="route(event)">Nos menus</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact" onclick="route(event)">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/avis" onclick="route(event)">Avis</a>
-                </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="/Vite-Gourmand/front/"
+                  onclick="route(event)"
+                  >Accueil</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/menu" onclick="route(event)"
+                  >Nos menus</a
+                >
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  href="/contact"
+                  onclick="route(event)"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalContact"
+                >
+                  Contact
+                </button>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/avis" onclick="route(event)">Avis</a>
+              </li>
             </ul>
 
-            <!-- Connexion / Déconnexion -->
             <ul class="navbar-nav ms-auto" id="nav-auth">
-                <!-- Si non connecté -->
-                <li class="nav-item" id="nav-login">
-                    <a class="nav-link btn btn-outline-primary px-3" href="/connexion" onclick="route(event)">Connexion <i class="bi bi-person-fill"></i></a>
-                </li>
-                <li class="nav-item d-none" id="nav-user">
-                    <a class="nav-link" href="/connexion" onclick="route(event)">Mon compte</a>
-                </li>
-                <li class="nav-item d-none" id="nav-logout">
-                    <button class="btn btn-outline-danger px-3" id="btn-logout">Déconnexion</button>
-                </li>
+              <li class="nav-item" id="nav-login">
+                <a
+                  class="nav-link btn btn-outline-primary px-3"
+                  href="/connexion"
+                  onclick="route(event)"
+                  >Connexion <i class="bi bi-person-fill"></i
+                ></a>
+              </li>
+              <li class="nav-item d-none" id="nav-user">
+                <a class="nav-link" href="/connexion" onclick="route(event)"
+                  >Mon compte</a
+                >
+              </li>
+              <li class="nav-item d-none" id="nav-logout">
+                <button class="btn btn-outline-danger px-3" id="btn-logout">
+                  Déconnexion
+                </button>
+              </li>
             </ul>
+          </div>
         </div>
-    </div>
-</nav>
-        </header>
+      </nav>
+    </header>
 
-        <main id="main-page">
-            <!--le futur contenu de la page-->
-        </main>
+    <main id="main-page">
+      <!--le futur contenu de la page-->
+    </main>
 
-        <footer class="bg-primary text-white text-center footer" data-bs-theme="dark">
-            <div class="row g-4">
-                <div class="col-6 col-md-4">
-                <h5>
-                    Horraires d'ouverture
-                </h5>
-                    <div class="row">
-                        <div class="col-6">
-                            <h6 class="text-white">JOUR</h6>
-                            <p class="text-secondary" id="horrairesId">Lundi - Vendredi</p>
-                            <p class="text-secondary" id="horrairesId">Samedi</p>
-                            <p class="text-secondary" id="horrairesId">Dimanche</p>
-                        </div>
-                        <div class="col-6">
-                            <h6 class="text-white">HORRAIRES</h6>
-                            <p class="text-secondary" id="horrairesId">9H00 - 19H00</p>
-                            <p class="text-secondary" id="horrairesId">10h00 - 17H00</p>
-                            <p class="text-secondary" id="horrairesId">Fermé</p>
-                        </div>
-                    </div>
-           </div>
-            <div class="col-6 col-md-4">
-                <h5>
-                    Liens utiles
-                </h5>
-                <a href="/">Accueil</a><br>
-                <a href="/menu">Nos menus</a><br>
-                <a href="">Mon compte</a><br>
-                <a href="">Laisser un avis</a><br>
-                <a href="">Nous contacter</a><br>
-           </div>
-           <div class="col-6 col-md-4 mx-auto">
-                <h6>
-                    L'entreprise
-                </h6>
-                <p>Vite & Gourmand. <br>
-                12 Rue des Saveurs 33000 Bordeaux, France</p>
-           </div>
+    <footer
+      class="bg-primary text-white text-center footer"
+      data-bs-theme="dark"
+    >
+      <div class="row g-4">
+        <div class="col-6 col-md-4">
+          <h5>Horraires d'ouverture</h5>
+          <div class="row">
+            <div class="col-6">
+              <h6 class="text-white">JOUR</h6>
+              <p class="text-secondary" id="horrairesId">Lundi - Vendredi</p>
+              <p class="text-secondary" id="horrairesId">Samedi</p>
+              <p class="text-secondary" id="horrairesId">Dimanche</p>
             </div>
-        </footer>
-        <script type="module" src="Router/Router.js"></script>
-        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+            <div class="col-6">
+              <h6 class="text-white">HORRAIRES</h6>
+              <p class="text-secondary" id="horrairesId">9H00 - 19H00</p>
+              <p class="text-secondary" id="horrairesId">10h00 - 17H00</p>
+              <p class="text-secondary" id="horrairesId">Fermé</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4">
+          <h5>Liens utiles</h5>
+          <a href="/">Accueil</a><br />
+          <a href="/menu">Nos menus</a><br />
+          <a href="">Mon compte</a><br />
+          <a href="">Laisser un avis</a><br />
+          <a href="">Nous contacter</a><br />
+        </div>
+        <div class="col-6 col-md-4 mx-auto">
+          <h6>L'entreprise</h6>
+          <p>
+            Vite & Gourmand. <br />
+            12 Rue des Saveurs 33000 Bordeaux, France
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script src="/js/auth/script.js"></script>
+    <script type="module" src="Router/Router.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+
+  <div class="modal fade" id="modalContact" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
+      <div class="modal-content modal-commande">
+        <div class="modal-header border-0 pb-0">
+          <h4 class="text-white fw-bold">Contactez-nous</h4>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body modal-commande-body">
+          <p class="text-white-50 mb-4">
+            Une question ? Une demande spéciale ? Écrivez-nous !
+          </p>
+
+          <form action="/pages/config/script/sendMail.php" method="POST">
+            <div class="d-flex flex-column gap-3">
+              <div class="row g-3">
+                <div class="col-6">
+                  <input
+                    type="text"
+                    class="modal-input"
+                    name="nom"
+                    placeholder="Nom"
+                    required
+                  />
+                </div>
+                <div class="col-6">
+                  <input
+                    type="text"
+                    class="modal-input"
+                    name="prenom"
+                    placeholder="Prénom"
+                    required
+                  />
+                </div>
+              </div>
+              <input
+                type="email"
+                class="modal-input"
+                name="email"
+                placeholder="Votre adresse email"
+                required
+              />
+              <input
+                type="tel"
+                class="modal-input"
+                name="telephone"
+                placeholder="Votre numéro de téléphone"
+              />
+              <select class="modal-input" name="sujet" required>
+                <option value="" disabled selected>
+                  Sujet de votre message
+                </option>
+                <option value="commande">Question sur une commande</option>
+                <option value="menu">Renseignement sur un menu</option>
+                <option value="evenement">Demande pour un événement</option>
+                <option value="autre">Autre</option>
+              </select>
+              <textarea
+                class="modal-input"
+                name="message"
+                placeholder="Votre message..."
+                rows="4"
+                required
+              ></textarea>
+
+              <button type="submit" class="btn btn-hero w-100">
+                Envoyer le message
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </html>

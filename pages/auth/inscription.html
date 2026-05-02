@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="auth-bg d-flex justify-content-center align-items-center">
+      <div class="auth text-white">
+        <h3 class="text-white mb-3 text-center">Inscription</h3>
+        <form>
+          <div class="row g-3">
+            <div class="col-6">
+              <label for="nom" class="form-label">Nom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nom"
+                name="nom"
+                placeholder="Votre nom"
+              />
+              <div id="nom" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-6">
+              <label for="prenom" class="form-label">Prénom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="prenom"
+                name="prenom"
+                placeholder="Votre prénom"
+              />
+              <div id="prenom" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-6">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Votre email"
+              />
+              <div id="email" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-6">
+              <label for="phoneNumber" class="form-label">Téléphone</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phoneNumber"
+                name="telephone"
+                placeholder="Votre téléphone"
+              />
+              <div id="phoneNumber" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-6">
+              <label for="ville" class="form-label">Ville</label>
+              <input
+                type="text"
+                class="form-control"
+                id="ville"
+                name="ville"
+                placeholder="Votre ville"
+              />
+              <div id="ville" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-6">
+              <label for="pays" class="form-label">Pays</label>
+              <input
+                type="text"
+                class="form-control"
+                id="pays"
+                name="pays"
+                placeholder="Votre pays"
+              />
+              <div id="pays" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-12">
+              <label for="password" class="form-label">Mot de passe</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="mdp"
+                placeholder="Votre mot de passe"
+              />
+              <div id="password" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-12">
+              <label for="confirmPassword" class="form-label"
+                >Confirmer votre mot de passe</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                name="mdp"
+                placeholder="Votre mot de passe"
+              />
+              <div id="confirmPassword" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-12">
+              <button
+                type="submit"
+                class="btn btn-hero w-100"
+                id="btn-inscription"
+              >
+                S'inscrire
+              </button>
+            </div>
+            <div class="col-12 text-center">
+              <a href="/connexion" onclick="route(event)" class="text-secondary"
+                >Déjà un compte ? Connectez-vous ici !</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../../js/auth/inscription.js"></script>
+  </body>
+</html>

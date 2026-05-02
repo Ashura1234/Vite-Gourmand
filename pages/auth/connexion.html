@@ -1,11 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-        De retour ?
-</body>
+  </head>
+  <body>
+    <div class="auth-bg d-flex justify-content-center align-items-center">
+      <div class="auth p-4 text-white">
+        <h3 class="text-white mb-3">Connexion</h3>
+        <form>
+          <div class="mb-3">
+            <label for="email" class="form-label">Adresse Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Entrez votre email"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="mdp"
+              placeholder="Entrez votre mot de passe"
+            />
+            <div class="invalid-feedback">
+              Votre identifiant ou votre mot de passe est incorrecte
+            </div>
+          </div>
+          <button type="submit" class="btn btn-hero w-100" id="btn-connexion">
+            Se connecter
+          </button>
+          <div class="text-center mt-3">
+            <a href="/inscription" onclick="route(event)" class="text-secondary"
+              >Vous n'avez pas encore de compte ? Inscrivez-vous ici !</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../../js/auth/connexion.js"></script>
+  </body>
 </html>

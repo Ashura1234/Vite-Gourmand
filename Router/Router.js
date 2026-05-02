@@ -31,6 +31,13 @@ const LoadContentPage = async () => {
   // Ajout du contenu HTML à l'élément avec l'ID "main-page"
   document.getElementById("main-page").innerHTML = html;
 
+  if (actualRoute.hideLayout) {
+    document.querySelector("header").classList.add("d-none");
+    document.querySelector("footer").classList.add("d-none");
+} else {
+    document.querySelector("header").classList.remove("d-none");
+    document.querySelector("footer").classList.remove("d-none");
+}
   // Ajout du contenu JavaScript
   if (actualRoute.pathJS != "") {
     // Création d'une balise script
