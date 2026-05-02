@@ -54,7 +54,7 @@
                 </button>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/avis" onclick="route(event)">Avis</a>
+                <button class="nav-link" onclick="route(event)" data-bs-toggle="modal" data-bs-target="#modalAvis">Laisser un avis</button>
               </li>
             </ul>
 
@@ -63,17 +63,17 @@
                 <a
                   class="nav-link btn btn-outline-primary px-3"
                   href="/connexion"
-                  onclick="route(event)"
+                  onclick="route(event)" data-show="disconnected"
                   >Connexion <i class="bi bi-person-fill"></i
                 ></a>
               </li>
-              <li class="nav-item d-none" id="nav-user">
+              <li class="nav-item d-none" id="nav-user" data-show="connected">
                 <a class="nav-link" href="/connexion" onclick="route(event)"
                   >Mon compte</a
                 >
               </li>
-              <li class="nav-item d-none" id="nav-logout">
-                <button class="btn btn-outline-danger px-3" id="btn-logout">
+              <li class="nav-item" data-show="connected">
+                <button class="nav-link" id="btn-deconnexion">
                   Déconnexion
                 </button>
               </li>
@@ -148,7 +148,7 @@
             Une question ? Une demande spéciale ? Écrivez-nous !
           </p>
 
-          <form action="/pages/config/script/sendMail.php" method="POST">
+          <form>
             <div class="d-flex flex-column gap-3">
               <div class="row g-3">
                 <div class="col-6">
@@ -209,4 +209,42 @@
       </div>
     </div>
   </div>
+  <div class="modal fade" id="modalAvis" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-commande">
+
+            <div class="modal-header border-0 pb-0">
+                <h4 class="text-white fw-bold">Laisser un avis</h4>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body modal-commande-body">
+                <p class="text-white-50 mb-4">Votre avis nous aide à nous améliorer !</p>
+
+                <form>
+                    <div class="d-flex flex-column gap-3">
+
+                        <!-- Note étoiles -->
+                        <div class="note-rating">
+                          <p class="text-white mb-2">Note</p>
+                          <div class="note-btns" id="noteContainer" required>
+                              <button type="button" class="note-btn" data-value="0">0</button>
+                              <button type="button" class="note-btn" data-value="1">1</button>
+                              <button type="button" class="note-btn" data-value="2">2</button>
+                              <button type="button" class="note-btn" data-value="3">3</button>
+                              <button type="button" class="note-btn" data-value="4">4</button>
+                              <button type="button" class="note-btn" data-value="5">5</button>
+                          </div>
+                          <input type="hidden" name="note" id="noteInput" value=""/>
+                      </div>
+                        <textarea class="modal-input" name="commentaire" placeholder="Votre commentaire..." rows="4" required></textarea>
+
+                        <button type="submit" class="btn btn-hero w-100">Publier mon avis</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 </html>

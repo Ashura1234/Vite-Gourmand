@@ -8,7 +8,7 @@ btnConnexion.addEventListener("click", checkAuth);
 function checkAuth(){
     //appel de l'api pour vérifier les informations utilisateur en BDD
 
-    if (mailInput.value == "test@mail.com" && passwordInput.value =="123"){ 
+    if (mailInput.value == "test@mail.com" && passwordInput.value =="1"){ 
         const token = "eijiojoijrijihjroijhirjhoirjhoirjhiorjhoirjhtijrtoiorijtei";
         setToken(token);
 

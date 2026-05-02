@@ -49,12 +49,8 @@ function eraseCookie(name) {
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
-function isConnected(){
-    if(getToken() == null || getToken == undefined){
-        return false;
-    }else{
-        return true;
-    }
+function isConnected() {
+    return getToken() != null && getToken() != undefined;
 }
 
 
@@ -88,3 +84,5 @@ function showAndHideElement(){
         }
     })
 }
+
+showAndHideElement();

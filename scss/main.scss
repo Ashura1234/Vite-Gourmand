@@ -780,3 +780,47 @@ textarea.modal-input {
     padding: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
+
+.note-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.note-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+      border-color: var(--bs-primary);
+      color: var(--bs-primary);
+  }
+
+  &.active {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+      color: white;
+  }
+}
+
+.star-icon {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &.active {
+      color: #c8a96e;
+  }
+
+  &:hover {
+      color: #c8a96e;
+  }
+}
