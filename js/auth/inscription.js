@@ -6,7 +6,11 @@ const inputValideMdp = document.getElementById("confirmPassword");
 const inputVille = document.getElementById("ville");
 const inputPays = document.getElementById("pays");
 const inputTel = document.getElementById("phoneNumber");
+const inputAdressePostale = document.getElementById("adresse");
 const btnInscription = document.getElementById("btn-inscription");
+const formInscription = document.getElementById("formInscription");
+
+btnInscription.addEventListener("click", inscriptionUser);
 
 inputPrenom.addEventListener("keyup", validateForm);
 inputNom.addEventListener("keyup", validateForm);
@@ -16,6 +20,7 @@ inputValideMdp.addEventListener("keyup", validateForm);
 inputVille.addEventListener("keyup", validateForm);
 inputPays.addEventListener("keyup", validateForm);
 inputTel.addEventListener("keyup", validateForm);
+inputAdressePostale.addEventListener("keyup", validateForm);
 
 
 function validateForm() {
@@ -27,8 +32,9 @@ function validateForm() {
     const villeOk = ValidateRequired(inputVille);
     const paysOk = ValidateRequired(inputPays);
     const telOk = telValid(inputTel);
+    const AdressePostaleOk = ValidateRequired(inputAdressePostale);
 
-    if (prenomOk && nomOk && mailOk && mdpOk && mdpValide && villeOk && paysOk && telOk) {
+    if (prenomOk && nomOk && mailOk && mdpOk && mdpValide && villeOk && paysOk && AdressePostaleOk && telOk) {
         btnInscription.disabled = false;
     } else {
         btnInscription.disabled = true;
@@ -96,4 +102,46 @@ function ValidateRequired(input) {
         input.classList.add("is-invalid");
         return false;
     }
+}
+
+function inscriptionUser() {
+    const dataForm = new FormData(formInscription);
+    const myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("X-AUTH-TOKEN", "57a2e8f46ab06a155b9e3a74b46ceae40cf68644");
+    myHeaders.append("Cookie", "sf_redirect=%7B%22token%22%3A%22f66ad5%22%2C%22route%22%3A%22app_apiinscription%22%2C%22method%22%3A%22POST%22%2C%22controller%22%3A%7B%22class%22%3A%22App%5C%5CController%5C%5CSecurityController%22%2C%22method%22%3A%22inscription%22%2C%22file%22%3A%22C%3A%5C%5CUsers%5C%5Cmpouh%5C%5Cvite_gourmand_backend%5C%5Csrc%5C%5CController%5C%5CSecurityController.php%22%2C%22line%22%3A66%7D%2C%22status_code%22%3A201%2C%22status_text%22%3A%22Created%22%7D");
+    
+    const raw = JSON.stringify({
+        "email": dataForm.get("email"),
+        "password": dataForm.get("mdp"),
+        "prenom": dataForm.get("prenom"),
+        "telephone": dataForm.get("telephone"),
+        "ville": dataForm.get("ville"),
+        "pays": dataForm.get("pays"),
+        "adresse_postale": dataForm.get("adresse")
+    });
+    
+    const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow"
+    };
+    
+    fetch(apiUrl+"inscription", requestOptions)
+    .then(response => {
+        if(response.ok) {
+            return response.json();
+        } else {
+            alert("Erreur lors de l'inscription");
+        }
+    })
+    .then((result) =>
+        {
+        alert("Inscription réussie, bienvenue ! "+dataForm.get("prenom")+" Vous pouvez désormais vous connecter.")
+        document.location.href="/connexion"
+    })
+    .catch((error) => console.error(error));
+    
 }

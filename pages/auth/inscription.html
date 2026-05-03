@@ -9,7 +9,7 @@
     <div class="auth-bg d-flex justify-content-center align-items-center">
       <div class="auth text-white">
         <h3 class="text-white mb-3 text-center">Inscription</h3>
-        <form>
+        <form id="formInscription">
           <div class="row g-3">
             <div class="col-6">
               <label for="nom" class="form-label">Nom</label>
@@ -84,6 +84,18 @@
               <div class="invalid-feedback">Ce champ est obligatoire</div>
             </div>
             <div class="col-12">
+              <label for="adresse" class="form-label">Adresse postale</label>
+              <input
+                type="text"
+                class="form-control"
+                id="adresse"
+                name="adresse"
+                placeholder="Votre adresse postale"
+              />
+              <div id="ville" class="form-text"></div>
+              <div class="invalid-feedback">Ce champ est obligatoire</div>
+            </div>
+            <div class="col-12">
               <label for="password" class="form-label">Mot de passe</label>
               <input
                 type="password"
@@ -111,7 +123,7 @@
             </div>
             <div class="col-12">
               <button
-                type="submit"
+                type="button"
                 class="btn btn-hero w-100"
                 id="btn-inscription"
               >
