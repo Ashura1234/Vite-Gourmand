@@ -5,7 +5,6 @@ btnInfo.addEventListener("click", fetchCompteInfos);
 
  async function fetchCompteInfos() {
     const token = getToken();
-    console.log("token :", token);
 
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");

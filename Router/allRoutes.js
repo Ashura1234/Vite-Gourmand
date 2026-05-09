@@ -1,7 +1,7 @@
 import Route from "./Route.js";
 export const allRoutes = [
     new Route("/", "Accueil", "/pages/home.html"),
-    new Route("/menu", "Menu", "/pages/menu.html"),
+    new Route("/menu", "Menu", "/pages/menu.html", "/js/menu.js"),
     new Route("/menuBordelais", "Menu bordelais", "/pages/menu/menuBordelais.html"),
     new Route("/menuPrintanier", "Menu Printanier", "/pages/menu/menuPrintanier.html"),
     new Route("/menuPrestige", "Menu Prestige", "/pages/menu/menuPrestige.html"),
