@@ -37,7 +37,7 @@
                   >Accueil</a
                 >
               </li>
-              <li class="nav-item">
+              <li class="nav-item" data-show="connected">
                 <a class="nav-link" href="/menu" onclick="route(event)"
                   >Nos menus</a
                 >
@@ -49,6 +49,7 @@
                   onclick="route(event)"
                   data-bs-toggle="modal"
                   data-bs-target="#modalContact"
+                  data-show="connected"
                 >
                   Contact
                 </button>
@@ -59,6 +60,7 @@
                   onclick="route(event)"
                   data-bs-toggle="modal"
                   data-bs-target="#modalAvis"
+                  data-show="connected"
                 >
                   Laisser un avis
                 </button>
@@ -111,7 +113,7 @@
     </header>
 
     <main id="main-page">
-      <!--le futur contenu de la page-->
+      <!--Le contenu de chaque page-->
     </main>
 
     <footer
