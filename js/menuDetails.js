@@ -18,7 +18,6 @@
       );
       if (!menuResponse.ok) throw new Error("Menu introuvable");
       const menu = await menuResponse.json();
-      console.log("debug :", menu);
 
       const imgResponse = await fetch(
         `http://localhost:8000/api/image-menu/menu/${menuId}`,
@@ -28,8 +27,10 @@
       const platsDetails = await Promise.all(
         (menu.plats ?? []).map(async (plat) => {
           const platResponse = await fetch(
-            `http://localhost:8000/api/plat/${plat.id}`,
+            `http://localhost:8000/api/plat/${plat.id}`
           );
+          const data = await platResponse.json();
+          return platResponse.ok ? data : null;
           return platResponse.ok ? await platResponse.json() : null;
         }),
       );
@@ -77,14 +78,14 @@
       plat.forEach((p) => {
         const allergenes =
           p.allergenes && p.allergenes.length > 0
-            ? p.allergenes.map((a) => a.nom).join(", ")
+            ? p.allergenes.map((a) => a.libelle).join(", ")
             : "Aucun";
 
         menuPlats.innerHTML += `
             <div class="detail-item">
                 <span class="detail-icon">🍽️</span>
                 <div>
-                    <strong>${p.titre_plat} - </strong> ${menu.description}
+                    <strong>${p.titre_plat} - </strong> ${p.description}
                     <br>
                     <span class="detail-allergene">Allergènes : ${allergenes}</span>
                 </div>
