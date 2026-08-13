@@ -1,71 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Nos Menus</title>
 </head>
 <body>
  <div class="container-fluid p-3 p-md-4 filtre-wrapper">
     <div class="filtre-container">
-        <!-- Thème -->
         <div class="dropdown filtre-item">
             <button class="btn filtre-btn dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-grid-fill filtre-icon"></i>
-                <span class="text-dropdown">Thème</span>
+                <span class="text-dropdown" id="label-theme">Thème</span>
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Tous les thèmes</a></li>
+            <ul class="dropdown-menu" id="dropdown-theme">
+                <li><a class="dropdown-item active" href="#" data-value="">Tous</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Bordelais</a></li>
-                <li><a class="dropdown-item" href="#">Printanier</a></li>
-                <li><a class="dropdown-item" href="#">Prestige</a></li>
+                <li><a class="dropdown-item" href="#" data-value="Français">Français</a></li>
+                <li><a class="dropdown-item" href="#" data-value="Italien">Italien</a></li>
+                <li><a class="dropdown-item" href="#" data-value="Asiatique">Asiatique</a></li>
             </ul>
         </div>
 
-        <!-- Prix -->
+        
+        <div class="dropdown filtre-item">
+            <button class="btn filtre-btn dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-grid-fill filtre-icon"></i>
+                <span class="text-dropdown" id="label-regime">Régime</span>
+            </button>
+            <ul class="dropdown-menu" id="dropdown-regime">
+                <li><a class="dropdown-item active" href="#" data-value="">Tous les régimes</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#" data-value="normal">Normal</a></li>
+                <li><a class="dropdown-item" href="#" data-value="Végétarien">Végétarien</a></li>
+            </ul>
+        </div>
+
+        
         <div class="dropdown filtre-item">
             <button class="btn filtre-btn dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                 <i class="bi bi-currency-euro filtre-icon"></i>
-                <span class="text-dropdown">Prix</span>
+                <span class="text-dropdown" id="label-prix">Prix</span>
             </button>
             <div class="dropdown-menu p-3 filtre-dropdown-prix">
                 <div class="price-input">
                     <div class="field">
                         <span>Min</span>
-                        <input type="number" class="input-min" value="20" min="0">
+                        <input type="number" class="input-min" id="input-price-min" value="0" min="0">
                     </div>
                     <div class="separator">-</div>
                     <div class="field">
                         <span>Max</span>
-                        <input type="number" class="input-max" value="50" min="0">
+                        <input type="number" class="input-max" id="input-price-max" value="200" min="0">
                     </div>
                 </div>
-                <button class="btn btn-primary btn-sm w-100 mt-3" type="button">Appliquer</button>
+                <button class="btn btn-primary btn-sm w-100 mt-3" type="button" id="btn-apply-price">Appliquer</button>
             </div>
         </div>
 
-        <!-- Personnes -->
+       
         <div class="dropdown filtre-item">
             <button class="btn filtre-btn dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-people-fill filtre-icon"></i>
-                <span class="text-dropdown">Personnes</span>
+                <span class="text-dropdown" id="label-personnes">Personnes</span>
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">1 - 2 personnes</a></li>
-                <li><a class="dropdown-item" href="#">3 - 5 personnes</a></li>
-                <li><a class="dropdown-item" href="#">6 - 10 personnes</a></li>
-                <li><a class="dropdown-item" href="#">10+ personnes</a></li>
-            </ul>
+            <ul class="dropdown-menu dropdown-personnes">
+    <li><a class="dropdown-item" href="#" data-min="0" data-max="9999">Toutes tailles</a></li>
+    <li><a class="dropdown-item" href="#" data-min="1" data-max="2">1 - 2 personnes</a></li>
+    <li><a class="dropdown-item" href="#" data-min="3" data-max="5">3 - 5 personnes</a></li>
+    <li><a class="dropdown-item" href="#" data-min="6" data-max="10">6 - 10 personnes</a></li>
+    <li><a class="dropdown-item" href="#" data-min="10" data-max="9999">10+ personnes</a></li>
+</ul>
         </div>
+
     </div>
 </div>
-    <section class="container-fluid p-4 section-menu">
+
+<section class="container-fluid p-4 section-menu">
     <h2 class="text-primary mb-4 h2-menu">
         <i class="bi bi-fork-knife"></i> Nos menus
     </h2>
     <div class="cards-wrapper" id="menus-container">
-        
+       
     </div>
 </section>
 </body>

@@ -341,7 +341,12 @@ textarea.modal-input {
   gap: 1.5rem;
   flex-wrap: wrap;
   .menu-card {
-    flex: 1 1 250px;
+    flex: 1 1 100%;
+    width: 100%;
+    @media (min-width: 600px) {
+      flex: 1 1 250px;
+      max-width: 300px;
+    }
   }
 }
 
@@ -886,4 +891,99 @@ textarea.modal-input {
     outline: none;
     background-color: rgba(255, 255, 255, 0.1);
   }
+}
+
+.body-commande {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 2rem;
+}
+
+.container-commande {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.commandes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Carte de commande */
+.commande-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #ffc107; /* Couleur selon statut */
+}
+
+.commande-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.commande-header .numero {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Badges de statut */
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.en-attente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.validee {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.annulee {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Détails de la commande */
+.commande-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0.2rem;
+}
+
+.commande-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #eee;
+  padding-top: 0.75rem;
+  font-weight: bold;
+}
+
+.price-total {
+  font-size: 1.2rem;
+  color: #2c3e50;
 }
