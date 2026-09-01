@@ -1,6 +1,6 @@
 import Route from "./Route.js";
 export const allRoutes = [
-    new Route("/", "Accueil", "/pages/home.html", "/js/menu.js"),
+    new Route("/", "Accueil", "/pages/home.html", "/js/home.js"),
     new Route("/menu", "Menu", "/pages/menu.html", "/js/menu.js"),
     new Route("/commande", "Mes commande", "/pages/menu/commandeUser/commandeUser.html", "/js/userCommande.js"),
     new Route("/menuBordelais", "Menu bordelais", "/pages/menu/menuBordelais.html"),
@@ -17,5 +17,8 @@ export const allRoutes = [
     new Route("/menuPoisson", "Menu Poisson", "/pages/menu/menuPoisson.html"),
     new Route("/connexion", "Connexion", "/pages/auth/connexion.html", "/js/auth/connexion.js"),
     new Route("/inscription", "Inscription", "/pages/auth/inscription.html", "/js/auth/inscription.js"),
+    new Route("/compte", "Mon compte", "/pages/auth/compte.html", "/js/auth/compte.js"),
+    new Route("/dashboard", "Dashboard Admin", "/pages/admin/dashboard.html", "/js/admin/dashboard.js"),
+    new Route("/dashboardEmploye", "Dashboard employé", "/pages/employes/employes.html", "/js/employes/employes.js"),
 ];
 export const websiteName = "Vite & Gourmand";

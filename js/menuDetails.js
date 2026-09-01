@@ -14,22 +14,22 @@
   async function fetchMenuDetail() {
     try {
       const menuResponse = await fetch(
-        `http://localhost:8000/api/menu/${menuId}`
+        `http://localhost:8000/api/menu/${menuId}`,
       );
       if (!menuResponse.ok) throw new Error("Menu introuvable");
       const menu = await menuResponse.json();
 
       const imgResponse = await fetch(
-        `http://localhost:8000/api/image-menu/menu/${menuId}`
+        `http://localhost:8000/api/image-menu/menu/${menuId}`,
       );
       const images = imgResponse.ok ? await imgResponse.json() : [];
       const platsDetails = await Promise.all(
         (menu.plats ?? []).map(async (plat) => {
           const platResponse = await fetch(
-            `http://localhost:8000/api/plat/${plat.id}`
+            `http://localhost:8000/api/plat/${plat.id}`,
           );
           return platResponse.ok ? await platResponse.json() : null;
-        })
+        }),
       );
       const plats = platsDetails.filter((p) => p !== null);
 
@@ -72,7 +72,8 @@
 
   function afficherDetail(menu, images, plats) {
     document.getElementById("menuTitre").textContent = menu.titre ?? "—";
-    document.getElementById("menuPrix").innerHTML = `<h4>/ ${menu.prix_par_personne ?? 0}€</h4>`;
+    document.getElementById("menuPrix").innerHTML =
+      `<h4>/ ${menu.prix_par_personne ?? 0}€</h4>`;
 
     const menuImages = document.getElementById("menuImages");
     menuImages.innerHTML = "";
@@ -120,14 +121,86 @@
     }
 
     document.getElementById("modalTitre").textContent = menu.titre ?? "—";
-    document.getElementById("modalPrix").innerHTML = `<i class="bi bi-person-fill"></i> ${menu.prix_par_personne ?? 0}€`;
-    document.getElementById("modalStock").innerHTML = `<i class="bi bi-box-seam"></i> ${menu.quantite_restante ?? 0} en stock`;
-    document.getElementById("modalTempsPreparation").innerHTML = `<i class="bi bi-stopwatch-fill"></i> ${menu.tempsPreparation ?? 0} min`;
+    document.getElementById("modalPrix").innerHTML =
+      `<i class="bi bi-person-fill"></i> ${menu.prix_par_personne ?? 0}€`;
+    document.getElementById("modalStock").innerHTML =
+      `<i class="bi bi-box-seam"></i> ${menu.quantite_restante ?? 0} en stock`;
+    document.getElementById("modalTempsPreparation").innerHTML =
+      `<i class="bi bi-stopwatch-fill"></i> ${menu.tempsPreparation ?? 0} min`;
 
     if (images.length > 0) {
-      document.getElementById("modalImage").src = `http://localhost:8000/uploads/menus/${images[0].chemin}`;
+      document.getElementById("modalImage").src =
+        `http://localhost:8000/uploads/menus/${images[0].chemin}`;
     }
   }
 
   fetchMenuDetail();
+
+  // Gestion de la commande
+  const btnValider = document.getElementById("btnValiderCommande");
+  if (btnValider) {
+    btnValider.addEventListener("click", async () => {
+      const datePrestation = document.getElementById(
+        "inputDatePrestation",
+      ).value;
+      const heureLivraison = document.getElementById(
+        "inputHeureLivraison",
+      ).value;
+      const nombrePersonnes = parseInt(
+        document.getElementById("inputNombrePersonnes").value,
+      );
+      const pretMateriel = document.getElementById("materiel").checked;
+
+      const errorEl = document.getElementById("commande-error");
+      const successEl = document.getElementById("commande-success");
+      errorEl.classList.add("d-none");
+      successEl.classList.add("d-none");
+
+      // Validation
+      if (!datePrestation || !heureLivraison || !nombrePersonnes) {
+        errorEl.textContent = "Veuillez remplir tous les champs.";
+        errorEl.classList.remove("d-none");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:8000/api/commande", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-AUTH-TOKEN": getToken(),
+          },
+          body: JSON.stringify({
+            date_prestation: datePrestation + "T" + heureLivraison + ":00",
+            nombre_personne: nombrePersonnes,
+            pret_material: pretMateriel,
+            restitution_material: false,
+            heure_livraison: heureLivraison,
+            menu: {
+              id: parseInt(menuId),
+            },
+          }),
+        });
+
+        if (response.ok) {
+          successEl.textContent = "Commande validée avec succès !";
+          successEl.classList.remove("d-none");
+          // Reset du formulaire
+          document.getElementById("inputDatePrestation").value = "";
+          document.getElementById("inputHeureLivraison").value = "";
+          document.getElementById("inputNombrePersonnes").value = "";
+          document.getElementById("materiel").checked = false;
+        } else {
+          const data = await response.json();
+          errorEl.textContent = data.detail ?? "Une erreur est survenue.";
+          errorEl.classList.remove("d-none");
+        }
+      } catch (error) {
+        console.error("Erreur commande :", error);
+        errorEl.textContent = "Impossible de passer la commande.";
+        errorEl.classList.remove("d-none");
+      }
+    });
+  }
 })();

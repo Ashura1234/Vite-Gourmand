@@ -77,7 +77,7 @@ function showAndHideElement() {
         }
         break;
       case "admin":
-        if (!userConnected || role != "admin") {
+        if (!userConnected || role != "ROLE_ADMIN") {
           element.classList.add("d-none");
         }
         break;
@@ -86,3 +86,82 @@ function showAndHideElement() {
 }
 
 showAndHideElement();
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modalAvis = document.getElementById("modalAvis");
+    if (modalAvis) {
+        modalAvis.addEventListener("show.bs.modal", () => {
+
+            // boutons de note réinitialisé à chaque ouverture
+            const noteBtns = document.querySelectorAll('.note-btn');
+            const noteInput = document.getElementById('noteInput');
+
+            noteBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    noteBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    noteInput.value = btn.dataset.value;
+                    console.log("note sélectionnée :", noteInput.value);
+                });
+            });
+
+            // Bouton publier
+            const btnPublierAvis = document.getElementById("btnPublierAvis");
+            const newBtn = btnPublierAvis.cloneNode(true);
+            btnPublierAvis.parentNode.replaceChild(newBtn, btnPublierAvis);
+
+            newBtn.addEventListener("click", async () => {
+                const note = document.getElementById("noteInput")?.value;
+                const description = document.getElementById("avisCommentaire").value;
+                console.log("note :", note, "description :", description);
+
+                const errorEl = document.getElementById("avis-error");
+                const successEl = document.getElementById("avis-success");
+                errorEl.classList.add("d-none");
+                successEl.classList.add("d-none");
+
+                if (!note || !description) {
+                    errorEl.textContent = "Veuillez donner une note et un commentaire.";
+                    errorEl.classList.remove("d-none");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("http://127.0.0.1:8000/api/avis", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "X-AUTH-TOKEN": getToken()
+                        },
+                        body: JSON.stringify({
+                            note: note,
+                            description: description,
+                            statut: "en attente"
+                        })
+                    });
+
+                    console.log("status :", response.status);
+                    const data = await response.json();
+                    console.log("data :", data);
+
+                    if (response.ok) {
+                        successEl.textContent = "Votre avis a été publié !";
+                        successEl.classList.remove("d-none");
+                        document.getElementById("noteInput").value = "";
+                        document.querySelectorAll('.note-btn').forEach(b => b.classList.remove('active'));
+                        document.getElementById("avisCommentaire").value = "";
+                    } else {
+                        errorEl.textContent = data.detail ?? "Une erreur est survenue.";
+                        errorEl.classList.remove("d-none");
+                    }
+                } catch (error) {
+                    console.error("Erreur :", error);
+                    errorEl.textContent = "Impossible de publier l'avis.";
+                    errorEl.classList.remove("d-none");
+                }
+            });
+        });
+    }
+});
+

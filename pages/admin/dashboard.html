@@ -1,0 +1,74 @@
+<body>
+<div class="container py-3 py-md-4">
+    <h1 class="text-primary mb-3 mb-md-4 h2 h1-md">Dashboard Administrateur</h1>
+    <ul class="nav nav-tabs mb-4" id="adminTabs">
+        <li class="nav-item">
+            <button class="nav-link active text-nowrap" data-tab="employes">Employés</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link text-nowrap" data-tab="stats">Statistiques</button>
+        </li>
+    </ul>
+    <div id="tab-employes">
+
+        <div class="card bg-dark text-white p-3 p-md-4 mb-4">
+            <h4 class="mb-3">Créer un compte employé</h4>
+
+            <div class="row g-2 g-md-3">
+                <div class="col-12 col-md-6">
+                    <input type="text" class="modal-input w-100" id="emp-prenom" placeholder="Prénom"/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="email" class="modal-input w-100" id="emp-email" placeholder="Email"/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="password" class="modal-input w-100" id="emp-password" placeholder="Mot de passe"/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="tel" class="modal-input w-100" id="emp-telephone" placeholder="Téléphone"/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="text" class="modal-input w-100" id="emp-ville" placeholder="Ville"/>
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="text" class="modal-input w-100" id="emp-pays" placeholder="Pays"/>
+                </div>
+                <div class="col-12">
+                    <input type="text" class="modal-input w-100" id="emp-adresse" placeholder="Adresse postale"/>
+                </div>
+            </div>
+            <div id="emp-error" class="text-danger mt-2 d-none"></div>
+            <div id="emp-success" class="text-success mt-2 d-none"></div>
+            <button class="btn btn-hero mt-3 w-100 w-md-auto" id="btn-creer-employe">Créer l'employé</button>
+        </div>
+
+
+        <div class="card bg-dark text-white p-3 p-md-4">
+            <h4 class="mb-3">Liste des employés</h4>
+            <div id="employes-list" class="table-responsive">Chargement...</div>
+        </div>
+    </div>
+
+
+    <div id="tab-stats" class="d-none">
+
+     
+        <div class="card bg-dark text-white p-3 p-md-4 mb-4">
+            <h4 class="mb-3">Chiffre d'affaires par menu</h4>
+        
+            <div class="d-flex flex-column flex-md-row gap-2 gap-md-3 mb-3">
+                <input type="date" class="modal-input w-100" id="ca-date-debut"/>
+                <input type="date" class="modal-input w-100" id="ca-date-fin"/>
+                <button class="btn btn-hero w-100 w-md-auto" id="btn-filter-ca">Filtrer</button>
+            </div>
+            <div id="ca-container" class="table-responsive">Aucune donnée</div>
+        </div>
+
+        <div class="card bg-dark text-white p-3 p-md-4">
+            <h4 class="mb-3">Nombre de commandes par menu</h4>
+            <button class="btn btn-hero mb-3 w-100 w-md-auto" id="btn-load-commandes">Charger</button>
+            <div id="commandes-container" class="table-responsive">Aucune donnée</div>
+        </div>
+    </div>
+</div>
+</body>

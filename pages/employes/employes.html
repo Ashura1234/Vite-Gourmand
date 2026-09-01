@@ -1,0 +1,385 @@
+<body>
+  <div class="container py-3 py-md-4">
+    <h1 class="text-primary mb-3 mb-md-4 h2 h1-md">Espace Employé</h1>
+
+    <!-- Navigation Principale (Onglets) -->
+    <ul class="nav nav-tabs mb-4 flex-nowrap overflow-auto" id="employeTabs">
+      <li class="nav-item">
+        <button class="nav-link active text-nowrap" data-tab="commandes">Commandes</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link text-nowrap" data-tab="avis">Avis à valider</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link text-nowrap" data-tab="carte">Gestion de la Carte</button>
+      </li>
+    </ul>
+
+    <!-- Section 1 : Gestion des Commandes -->
+    <div class="container my-4 px-0" id="tab-commandes">
+      <h2 class="mb-4">Gestion des Commandes</h2>
+
+      <!-- Barre de filtres -->
+      <div class="row g-3 mb-4 bg-light p-3 rounded border">
+        <div class="col-md-4">
+          <label for="filter-statut" class="form-label fw-bold">Filtrer par statut</label>
+          <select id="filter-statut" class="form-select">
+            <option value="">Tous les statuts</option>
+            <option value="en attente">En attente</option>
+            <option value="validée">Validée</option>
+            <option value="terminée">Terminée</option>
+            <option value="annulée">Annulée</option>
+          </select>
+        </div>
+
+        <div class="col-md-5">
+          <label for="filter-user" class="form-label fw-bold">Rechercher un client (Email / Prénom)</label>
+          <input 
+            type="text" 
+            id="filter-user" 
+            class="form-control" 
+            placeholder="ex: client@gmail.com ou Jean"
+          />
+        </div>
+
+        <div class="col-md-3 d-flex align-items-end">
+          <button id="btn-reset-filters" class="btn btn-outline-secondary w-100">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <!-- Conteneur d'affichage dynamique -->
+      <div id="commandes-container">
+        <div class="text-center py-4">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 : Validation des Avis -->
+    <div class="container my-4 px-0 d-none" id="tab-avis">
+      <h3 class="fw-bold mb-3">Modération des Avis Client</h3>
+      <div id="avis-container">
+        <!-- Le tableau sera généré ici via JS -->
+      </div>
+    </div>
+
+    <!-- Section 3 : Gestion de la Carte -->
+    <div id="tab-carte" class="container my-4 px-0 d-none">
+      
+      <!-- En-tête & Barre d'actions -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <div>
+          <h2 class="fw-bold m-0">Gestion de la Carte & de l'Offre</h2>
+          <p class="text-muted small m-0">Gérez vos menus, la carte des plats, les régimes et la sécurité allergène.</p>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary" onclick="openEditMenuModal()">
+            + Nouveau Menu
+          </button>
+          <button type="button" class="btn btn-outline-primary" onclick="openPlatModal()">
+            + Nouveau Plat
+          </button>
+          <button type="button" class="btn btn-outline-secondary" onclick="openRegimeModal()">
+            + Régime / Allergène
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation sous-onglets Carte -->
+      <ul class="nav nav-pills mb-3" id="carteSubTabs">
+        <li class="nav-item">
+          <button class="nav-link active" data-carte-pane="menus">Menus (<span id="count-menus">0</span>)</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-carte-pane="plats">Plats (<span id="count-plats">0</span>)</button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link" data-carte-pane="regimes-allergenes">Régimes & Allergènes</button>
+        </li>
+      </ul>
+
+      <!-- Pane 1 : Tableau des Menus -->
+      <div id="pane-menus">
+        <div class="table-responsive bg-white rounded border shadow-sm">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th style="width: 80px;">Visuel</th>
+                <th>Menu & Description</th>
+                <th>Régime</th>
+                <th>Composition (Plats)</th>
+                <th>Prix / Pers.</th>
+                <th>Stock</th>
+                <th class="text-end" style="width: 140px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="carte-menus-container">
+              <!-- Injecté dynamiquement en JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pane 2 : Tableau des Plats -->
+      <div id="pane-plats" class="d-none">
+        <div class="table-responsive bg-white rounded border shadow-sm">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-dark">
+              <tr>
+                <th style="width: 80px;">Visuel</th>
+                <th>Nom du Plat</th>
+                <th>Type</th>
+                <th>Allergènes</th>
+                <th class="text-end" style="width: 140px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="carte-plats-container">
+              <!-- Injecté dynamiquement en JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Pane 3 : Régimes & Allergènes -->
+      <div id="pane-regimes-allergenes" class="d-none">
+        <div id="regimes-container">
+          <!-- Injecté dynamiquement en JS -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODALES (Hors conteneur principal)         -->
+  <!-- ========================================== -->
+
+  <!-- Modale Traitement Avis -->
+  <div class="modal fade" id="modalAvisDetails" tabindex="-1" aria-labelledby="modalAvisLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content text-dark">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="modalAvisLabel">Modérer l'avis #<span id="md-avis-id"></span></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3 border-bottom pb-2">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <strong id="md-avis-auteur">Client</strong>
+              <span id="md-avis-note" class="badge bg-warning text-dark"></span>
+            </div>
+            <small class="text-muted d-block" id="md-avis-date"></small>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold">Commentaire laissé :</label>
+            <div class="p-3 bg-light border rounded italic" id="md-avis-description"></div>
+          </div>
+
+          <form id="form-update-avis">
+            <input type="hidden" id="md-input-avis-id" />
+
+            <div class="mb-3">
+              <label for="md-select-avis-statut" class="form-label fw-bold">Décision de modération</label>
+              <select id="md-select-avis-statut" class="form-select" required>
+                <option value="en_attente">En attente de validation</option>
+                <option value="valide">Valider / Publier</option>
+                <option value="refuse">Refuser / Masquer</option>
+              </select>
+            </div>
+
+            <div id="md-avis-error" class="alert alert-danger d-none" role="alert"></div>
+            <div id="md-avis-success" class="alert alert-success d-none" role="alert"></div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+              <button type="submit" class="btn btn-primary" id="btn-save-avis">Enregistrer la décision</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Détails Commande -->
+  <div class="modal fade" id="modalCommandeDetails" tabindex="-1" aria-labelledby="modalCommandeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content text-dark">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="modalCommandeLabel">Détails de la commande <span id="md-numero" class="text-info"></span></h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col-md-6 border-end">
+              <h6 class="fw-bold text-primary">Informations Client</h6>
+              <p class="mb-1" id="md-client-nom"></p>
+              <p class="mb-1" id="md-client-email"></p>
+              <p class="mb-1" id="md-client-phone"></p>
+              <p class="mb-0" id="md-client-adresse"></p>
+            </div>
+            <div class="col-md-6">
+              <h6 class="fw-bold text-primary">Détails Prestation</h6>
+              <p class="mb-1" id="md-menu-titre"></p>
+              <p class="mb-1" id="md-date-prestation"></p>
+              <p class="mb-1" id="md-prix-total"></p>
+              <p class="mb-0" id="md-materiel"></p>
+            </div>
+          </div>
+
+          <hr />
+
+          <form id="form-update-statut">
+            <input type="hidden" id="md-cmd-id" />
+            
+            <div class="mb-3">
+              <label for="md-select-statut" class="form-label fw-bold">Modifier le statut de la commande</label>
+              <select id="md-select-statut" class="form-select" required>
+                <option value="en attente">En attente</option>
+                <option value="validée">Validée</option>
+                <option value="terminée">Terminée</option>
+                <option value="annulée">Annulée</option>
+              </select>
+            </div>
+
+            <div id="section-annulation" class="p-3 bg-light border rounded mb-3 d-none">
+              <h6 class="text-danger fw-bold mb-3">Informations d'annulation</h6>
+              
+              <div class="mb-3">
+                <label for="md-motif-annulation" class="form-label">Motif d'annulation <span class="text-danger">*</span></label>
+                <textarea id="md-motif-annulation" class="form-control" rows="2" placeholder="Ex: Client absent lors de la livraison"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="md-mode-contact" class="form-label">Mode de contact utilisé <span class="text-danger">*</span></label>
+                <select id="md-mode-contact" class="form-select">
+                  <option value="">-- Sélectionner le moyen de contact --</option>
+                  <option value="email">Email</option>
+                  <option value="telephone">Téléphone</option>
+                  <option value="sms">SMS</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="md-error" class="alert alert-danger d-none" role="alert"></div>
+            <div id="md-success" class="alert alert-success d-none" role="alert"></div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+              <button type="submit" class="btn btn-primary" id="btn-save-statut">Enregistrer les modifications</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Menu -->
+  <div class="modal fade" id="openEditMenuModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="form-menu">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="modalMenuTitle">Créer / Modifier un Menu</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="menu-id" />
+            <div class="row g-3">
+              <div class="col-md-8">
+                <label for="menu-titre" class="form-label fw-bold">Nom du menu</label>
+                <input type="text" id="menu-titre" class="form-control" required placeholder="ex: Menu Dégustation Prestige" />
+              </div>
+              <div class="col-md-4">
+                <label for="menu-prix" class="form-label fw-bold">Prix par personne (€)</label>
+                <input type="number" step="0.01" id="menu-prix" class="form-control" required />
+              </div>
+              <div class="col-12">
+                <label for="menu-description" class="form-label fw-bold">Description commerciale</label>
+                <textarea id="menu-description" class="form-control" rows="2" required></textarea>
+              </div>
+              <div class="col-md-6">
+                <label for="menu-image" class="form-label fw-bold">URL / Image d'illustration</label>
+                <input type="file" id="menu-image" class="form-control" accept="image/*"/>
+                <small class="text-muted">Formats acceptés : jpg, png, webp</small>
+              </div>
+              <div class="col-md-6">
+                <label for="menu-regime" class="form-label fw-bold">Régime associé</label>
+                <select id="menu-regime" class="form-select">
+                  <!-- Option d'association dynamique -->
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="menu-theme" class="form-label fw-bold">Thème associé</label>
+                <select id="menu-theme" class="form-select" required>
+                  <!-- Option d'association dynamique -->
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="menu-quantite" class="form-label fw-bold">Quantité (Stock)</label>
+                <input type="number" id="menu-quantite" class="form-control" required />
+              </div>
+              <div class="col-md-4">
+                <label for="menu-min-pers" class="form-label fw-bold">Nb. pers. min.</label>
+                <input type="number" id="menu-min-pers" class="form-control" value="1" required />
+              </div>
+              <div class="col-md-4">
+                <label for="menu-temps-prep" class="form-label fw-bold">Temps prép. (min)</label>
+                <input type="number" id="menu-temps-prep" class="form-control" value="30" required />
+              </div>
+              <div class="col-12">
+                <label for="menu-plats" class="form-label fw-bold">Sélection des plats composant le menu</label>
+                <select id="menu-plats" class="form-select" multiple size="5" required>
+                  <!-- Multi-sélection dynamique -->
+                </select>
+                <small class="text-muted">Maintenez la touche Ctrl (ou Cmd) pour sélectionner plusieurs plats.</small>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer le Menu</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale Régime / Allergène -->
+  <div class="modal fade" id="modalRegime" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="form-regime">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title" id="modalRegimeTitle">Ajouter un Régime / Allergène</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="regime-id" />
+            <div class="mb-3">
+              <label for="regime-nom" class="form-label fw-bold">Intitulé / Nom</label>
+              <input type="text" id="regime-nom" class="form-control" required placeholder="ex: Sans Gluten, Végétarien..." />
+            </div>
+            <div class="mb-3">
+              <label for="regime-type" class="form-label fw-bold">Type</label>
+              <select id="regime-type" class="form-select" required>
+                <option value="regime">Régime alimentaire</option>
+                <option value="allergene">Allergène</option>
+              </select>
+            </div>
+            <div id="regime-error" class="alert alert-danger d-none" role="alert"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>

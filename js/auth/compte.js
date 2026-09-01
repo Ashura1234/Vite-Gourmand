@@ -1,10 +1,9 @@
-const modalMonCompte = document.getElementById("modalMonCompte");
-const btnInfo = document.getElementById("btn-info-compte")
-
-btnInfo.addEventListener("click", fetchCompteInfos);
-
- async function fetchCompteInfos() {
+async function fetchCompteInfos() {
     const token = getToken();
+    if (!token) {
+        window.location.replace("/connexion");
+        return;
+    }
 
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
@@ -16,9 +15,7 @@ btnInfo.addEventListener("click", fetchCompteInfos);
             headers: myHeaders
         });
 
-        console.log("status :", response.status);
         const data = await response.json();
-        console.log("data :", data);
 
         if (response.ok) {
             document.getElementById("compte-prenom").textContent = data.prenom ?? "—";
@@ -33,7 +30,9 @@ btnInfo.addEventListener("click", fetchCompteInfos);
     }
 }
 
-const btnDeconnexionModal = document.getElementById("btn-deconnexion-modal");
-if (btnDeconnexionModal) {
-    btnDeconnexionModal.addEventListener("click", deconnected);
+const btnDeconnexionPage = document.getElementById("btn-deconnexion-page");
+if (btnDeconnexionPage) {
+    btnDeconnexionPage.addEventListener("click", deconnected);
 }
+
+fetchCompteInfos();

@@ -40,66 +40,49 @@
       </div>
     </div>
 
-    <div
-      class="modal fade"
-      id="modalCommander"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="modalCommander" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-commande">
-          <div class="modal-img-wrapper">
-            <img id="modalImage" class="modal-img" alt="Menu" />
-          </div>
-
-          <div class="modal-body modal-commande-body">
-            <h4 class="text-white fw-bold" id="modalTitre"></h4>
-
-            <div class="d-flex gap-2 mt-2 mb-4">
-              <span class="modal-badge" id="modalPrix">
-                <i class="bi bi-person-fill"></i>
-              </span>
-              <span class="modal-badge" id="modalStock">
-                <i class="bi bi-box-seam"></i>
-              </span>
-              <span class="modal-badge" id="modalTempsPreparation">
-                <i class="bi bi-stopwatch-fill"></i>
-              </span>
+            <div class="modal-img-wrapper">
+                <img id="modalImage" class="modal-img" alt="Menu"/>
             </div>
 
-            <div class="d-flex flex-column gap-3">
-              <input
-                type="date"
-                class="modal-input"
-                placeholder="Date de prestation..."
-              />
-              <input
-                type="time"
-                class="modal-input"
-                placeholder="Heure de livraison"
-              />
-              <input
-                type="number"
-                class="modal-input"
-                placeholder="Nombre de personnes"
-                min="1"
-              />
-              <div class="d-flex align-items-center gap-3">
-                <input type="checkbox" class="modal-checkbox" id="materiel" />
-                <label for="materiel" class="modal-input flex-grow-1 mb-0"
-                  >Prêt matériel</label
-                >
-              </div>
-            </div>
+            <div class="modal-body modal-commande-body">
+                <h4 class="text-white fw-bold" id="modalTitre"></h4>
 
-            <div class="text-center mt-4">
-              <button class="btn btn-hero btn-commander">
-                Valider et payer
-              </button>
+                <div class="d-flex gap-2 mt-2 mb-4">
+                    <span class="modal-badge" id="modalPrix">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+                    <span class="modal-badge" id="modalStock">
+                        <i class="bi bi-box-seam"></i>
+                    </span>
+                    <span class="modal-badge" id="modalTempsPreparation">
+                        <i class="bi bi-stopwatch-fill"></i>
+                    </span>
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    <input type="date" class="modal-input" id="inputDatePrestation"/>
+                    <input type="time" class="modal-input" id="inputHeureLivraison"/>
+                    <input type="number" class="modal-input" id="inputNombrePersonnes" placeholder="Nombre de personnes" min="1"/>
+                    <div class="d-flex align-items-center gap-3">
+                        <input type="checkbox" class="modal-checkbox" id="materiel"/>
+                        <label for="materiel" class="modal-input flex-grow-1 mb-0">Prêt matériel</label>
+                    </div>
+                </div>
+
+                <div id="commande-error" class="text-danger mt-2 d-none"></div>
+                <div id="commande-success" class="text-success mt-2 d-none"></div>
+
+                <div class="text-center mt-4">
+                    <button class="btn btn-hero btn-commander" id="btnValiderCommande">
+                        Valider et payer
+                    </button>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
   </body>
 </html>

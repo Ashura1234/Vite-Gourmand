@@ -11,106 +11,112 @@
     <title>Vite & Gourmand</title>
   </head>
   <body>
-    <header>
-      <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
-        <div class="container">
-          <a class="navbar-brand" href="/" onclick="route(event)">
-            Vite & Gourmand
-          </a>
+  <header>
+  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+    <!-- container-fluid ou container xl pour donner plus d'espace -->
+    <div class="container-fluid px-lg-5">
+      <a class="navbar-brand text-nowrap me-4" href="/" onclick="route(event)">
+        Vite & Gourmand
+      </a>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="/"
-                  onclick="route(event)"
-                  >Accueil</a
-                >
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- Gauche : text-nowrap empèche le retour à la ligne -->
+        <ul class="navbar-nav me-auto align-items-lg-center text-nowrap">
+          <li class="nav-item">
+            <a class="nav-link" href="/" onclick="route(event)">Accueil</a>
+          </li>
+          <li class="nav-item" data-show="connected">
+            <a class="nav-link" href="/menu" onclick="route(event)">Nos menus</a>
+          </li>
+          <li class="nav-item" data-show="connected">
+            <a
+              class="nav-link border-0 bg-transparent"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#modalContact"
+            >
+              Contact
+            </a>
+          </li>
+          <li class="nav-item" data-show="connected">
+            <a
+              class="nav-link border-0 bg-transparent"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#modalAvis"
+            >
+              Laisser un avis
+            </a>
+          </li>
+        </ul>
+
+        <!-- Droite : text-nowrap et suppression des marges superflues -->
+        <ul class="navbar-nav ms-auto align-items-lg-center text-nowrap gap-lg-1" id="nav-auth">
+          <li class="nav-item" id="nav-login" data-show="disconnected">
+            <a
+              class="nav-link btn btn-outline-light px-3"
+              href="/connexion"
+              onclick="route(event)"
+            >
+              Connexion <i class="bi bi-person-fill"></i>
+            </a>
+          </li>
+
+          <li class="nav-item" data-show="connected">
+            <a class="nav-link" href="/commande" onclick="route(event)" id="commande">
+              Mes commandes
+            </a>
+          </li>
+
+          <li class="nav-item" data-show="connected">
+            <a class="nav-link" href="/compte" onclick="route(event)" id="btn-info-compte">
+              Mon compte
+            </a>
+          </li>
+
+          <!-- Dropdown Admin / Employé -->
+          <li class="nav-item dropdown" data-show="admin,employe">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Dashboard
+            </a>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li data-show="admin">
+                <a class="dropdown-item" href="/dashboard" onclick="route(event)">Dashboard Administrateur</a>
               </li>
-              <li class="nav-item" data-show="connected">
-                <a class="nav-link" href="/menu" onclick="route(event)"
-                  >Nos menus</a
-                >
-              </li>
-              <li class="nav-item">
-                <button
-                  class="nav-link"
-                  href="/contact"
-                  onclick="route(event)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalContact"
-                  data-show="connected"
-                >
-                  Contact
-                </button>
-              </li>
-              <li class="nav-item">
-                <button
-                  class="nav-link"
-                  onclick="route(event)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalAvis"
-                  data-show="connected"
-                >
-                  Laisser un avis
-                </button>
+              <li data-show="admin,employe">
+                <a class="dropdown-item" href="/dashboardEmploye" onclick="route(event)">Dashboard Employé</a>
               </li>
             </ul>
+          </li>
 
-            <ul class="navbar-nav ms-auto" id="nav-auth">
-              <li class="nav-item" id="nav-login">
-                <a
-                  class="nav-link btn btn-outline-primary px-3"
-                  href="/connexion"
-                  onclick="route(event)"
-                  data-show="disconnected"
-                  >Connexion <i class="bi bi-person-fill"></i
-                ></a>
-              </li>
-              <li class="nav-item" id="nav-user" data-show="connected">
-                <a
-                  class="nav-link"
-                  onclick="route(event)"
-                  id="commande"
-                  href="/commande"
-                >
-                  Mes commandes
-                </a>
-              </li>
-              <li class="nav-item" id="nav-user" data-show="connected">
-                <button
-                  class="nav-link"
-                  onclick="route(event)"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalMonCompte"
-                  id="btn-info-compte"
-                >
-                  Mon compte
-                </button>
-              </li>
-              <li class="nav-item" data-show="connected">
-                <button
-                  class="nav-link btn btn-outline-danger"
-                  id="btn-deconnexion"
-                >
-                  Déconnexion
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+          <li class="nav-item ms-lg-2" data-show="connected">
+            <button
+              class="btn btn-outline-danger text-nowrap"
+              id="btn-deconnexion"
+            >
+              Déconnexion
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 
     <main id="main-page">
       <!--Le contenu de chaque page-->
@@ -251,54 +257,33 @@
           ></button>
         </div>
 
-        <div class="modal-body modal-commande-body">
-          <p class="text-white-50 mb-4">
-            Votre avis nous aide à nous améliorer !
-          </p>
+     <div class="modal-body modal-commande-body">
+    <p class="text-white-50 mb-4">Votre avis nous aide à nous améliorer !</p>
 
-          <form>
-            <div class="d-flex flex-column gap-3">
-              <div class="note-rating">
-                <p class="text-white mb-2">Note</p>
-                <div class="note-btns" id="noteContainer" required>
-                  <button type="button" class="note-btn" data-value="0">
-                    0
-                  </button>
-                  <button type="button" class="note-btn" data-value="1">
-                    1
-                  </button>
-                  <button type="button" class="note-btn" data-value="2">
-                    2
-                  </button>
-                  <button type="button" class="note-btn" data-value="3">
-                    3
-                  </button>
-                  <button type="button" class="note-btn" data-value="4">
-                    4
-                  </button>
-                  <button type="button" class="note-btn" data-value="5">
-                    5
-                  </button>
-                </div>
-                <input type="hidden" name="note" id="noteInput" value="" />
-              </div>
-              <textarea
-                class="modal-input"
-                name="commentaire"
-                placeholder="Votre commentaire..."
-                rows="4"
-                required
-              ></textarea>
-
-              <button type="submit" class="btn btn-hero w-100">
-                Publier mon avis
-              </button>
+    <div class="d-flex flex-column gap-3">
+        <div class="note-rating">
+            <p class="text-white mb-2">Note</p>
+            <!-- Système de notation par étoiles -->
+            <div class="note-btns d-flex gap-2" id="noteContainer">
+                <button type="button" class="note-btn star-btn" data-value="1" title="1/5"><i class="bi bi-star-fill" id="note1"></i></button>
+                <button type="button" class="note-btn star-btn" data-value="2" title="2/5"><i class="bi bi-star-fill"></i></button>
+                <button type="button" class="note-btn star-btn" data-value="3" title="3/5"><i class="bi bi-star-fill"></i></button>
+                <button type="button" class="note-btn star-btn" data-value="4" title="4/5"><i class="bi bi-star-fill"></i></button>
+                <button type="button" class="note-btn star-btn" data-value="5" title="5/5"><i class="bi bi-star-fill"></i></button>
             </div>
-          </form>
+            <input type="hidden" id="noteInput" value=""/>
         </div>
-      </div>
+
+        <textarea class="modal-input form-control bg-dark text-white border-secondary" id="avisCommentaire" placeholder="Votre commentaire..." rows="4"></textarea>
+
+        <div id="avis-error" class="text-danger d-none"></div>
+        <div id="avis-success" class="text-success d-none"></div>
+
+        <button type="button" class="btn btn-hero w-100 mt-2" id="btnPublierAvis">
+            Publier mon avis
+        </button>
     </div>
-  </div>
+</div>
 
   <div class="modal fade" id="modalMonCompte" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down">
