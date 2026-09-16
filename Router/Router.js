@@ -4,6 +4,10 @@ import { allRoutes, websiteName } from "./allRoutes.js";
 const route404 = new Route("404", "Page introuvable", "./pages/404.html");
 
 const getRouteByUrl = (url) => {
+  if (/^\/(?:reset-mdp|reset-password|resetPassword)\/[^/]+$/.test(url)) {
+    return allRoutes.find((route) => route.url === "/reset-mdp");
+  }
+
   let currentRoute = null;
   allRoutes.forEach((element) => {
     if (element.url == url) {
@@ -13,9 +17,35 @@ const getRouteByUrl = (url) => {
   return currentRoute != null ? currentRoute : route404;
 };
 
+const canAccessRoute = (route) => {
+  const role = typeof getRole === "function" ? getRole() : null;
+  const token = typeof getToken === "function" ? getToken() : null;
+  const roles = role ? role.split(",").map((value) => value.trim()) : [];
+  const isAdmin = roles.includes("ROLE_ADMIN") || roles.includes("admin");
+  const isEmployee =
+    roles.includes("employe") ||
+    roles.includes("employé") ||
+    roles.includes("ROLE_EMPLOYE") ||
+    roles.includes("ROLE_EMPLOYEE");
+
+  if (route.access === "public") return true;
+  if (route.access === "connected") return Boolean(token);
+  if (route.access === "admin") return Boolean(token) && isAdmin;
+  if (route.access === "employee") return Boolean(token) && isEmployee;
+  if (route.access === "employeeOrAdmin") {
+    return Boolean(token) && (isAdmin || isEmployee);
+  }
+  return false;
+};
+
 const LoadContentPage = async () => {
   const path = window.location.pathname;
   const actualRoute = getRouteByUrl(path);
+  if (!canAccessRoute(actualRoute)) {
+    const redirectPath = actualRoute.access === "connected" ? "/connexion" : "/";
+    window.history.replaceState({}, "", redirectPath);
+    return LoadContentPage();
+  }
   const html = await fetch(actualRoute.pathHtml).then((data) => data.text());
   document.getElementById("main-page").innerHTML = html;
 

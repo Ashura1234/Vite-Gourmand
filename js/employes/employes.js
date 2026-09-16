@@ -6,11 +6,7 @@
     "X-AUTH-TOKEN": token,
   };
 
-  
   // 1. GESTION DES ONGLETS & PANES
-  
-
-  // Navigation Principale
   document.querySelectorAll("[data-tab]").forEach((btn) => {
     btn.addEventListener("click", () => {
       document
@@ -27,7 +23,6 @@
     });
   });
 
-  // Navigation Sous-onglets Carte
   document.querySelectorAll("[data-carte-pane]").forEach((btn) => {
     btn.addEventListener("click", () => {
       document
@@ -48,9 +43,7 @@
     });
   });
 
-  
   // 2. MODULE COMMANDES
-  
   let rawCommandes = [];
   let modalCommandeInstance = null;
 
@@ -124,56 +117,54 @@
   function renderTable(commandes) {
     const container = document.getElementById("commandes-container");
     container.innerHTML = `
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>N° Commande</th>
-                            <th>Client</th>
-                            <th>Menu</th>
-                            <th>Prestation</th>
-                            <th>Prix Total</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${commandes
-                          .map((cmd) => {
-                            const prixTotal = (
-                              parseFloat(cmd.prix_menu || 0) +
-                              parseFloat(cmd.prix_livraison || 0)
-                            ).toFixed(2);
-                            const datePrestation = cmd.date_prestation
-                              ? new Date(
-                                  cmd.date_prestation,
-                                ).toLocaleDateString("fr-FR")
-                              : "—";
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>N° Commande</th>
+              <th>Client</th>
+              <th>Menu</th>
+              <th>Prestation</th>
+              <th>Prix Total</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${commandes
+              .map((cmd) => {
+                const prixTotal = (
+                  parseFloat(cmd.prix_menu || 0) +
+                  parseFloat(cmd.prix_livraison || 0)
+                ).toFixed(2);
+                const datePrestation = cmd.date_prestation
+                  ? new Date(cmd.date_prestation).toLocaleDateString("fr-FR")
+                  : "—";
 
-                            return `
-                                <tr>
-                                    <td class="fw-bold">${cmd.numero_commande ?? "—"}</td>
-                                    <td>
-                                        <div>${cmd.user?.prenom ?? "—"}</div>
-                                        <small class="text-muted">${cmd.user?.email ?? ""}</small>
-                                    </td>
-                                    <td>${cmd.Menu?.titre ?? "—"}</td>
-                                    <td>${datePrestation} à ${cmd.heure_livraison ?? "—"}</td>
-                                    <td class="fw-bold text-primary">${prixTotal} €</td>
-                                    <td>${getStatutBadge(cmd.statut)}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="openDetailsModal(${cmd.id})">
-                                            Gérer
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                          })
-                          .join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
+                return `
+                  <tr>
+                    <td class="fw-bold">${cmd.numero_commande ?? "—"}</td>
+                    <td>
+                      <div>${cmd.user?.prenom ?? "—"}</div>
+                      <small class="text-muted">${cmd.user?.email ?? ""}</small>
+                    </td>
+                    <td>${cmd.Menu?.titre ?? "—"}</td>
+                    <td>${datePrestation} à ${cmd.heure_livraison ?? "—"}</td>
+                    <td class="fw-bold text-primary">${prixTotal} €</td>
+                    <td>${getStatutBadge(cmd.statut)}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary" onclick="openDetailsModal(${cmd.id})">
+                        Gérer
+                      </button>
+                    </td>
+                  </tr>
+                `;
+              })
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   window.openDetailsModal = (id) => {
@@ -249,6 +240,8 @@
       errorEl?.classList.add("d-none");
       successEl?.classList.add("d-none");
 
+      const body = { statut };
+
       if (statut === "annulée" || statut === "annulee") {
         const motif = document
           .getElementById("md-motif-annulation")
@@ -320,7 +313,6 @@
     return `<span class="badge bg-info">${statut}</span>`;
   }
 
-  // Filtres
   document
     .getElementById("filter-statut")
     ?.addEventListener("change", applyFiltersAndRender);
@@ -337,13 +329,11 @@
       applyFiltersAndRender();
     });
 
-  
   // 3. MODULE AVIS
-  
   let rawAvis = [];
   let modalAvisInstance = null;
 
-  const modalAvisEl = document.getElementById("modalAvisDetails");
+  const modalAvisEl = document.getElementById("modalAvis");
   if (modalAvisEl && typeof bootstrap !== "undefined") {
     modalAvisInstance = new bootstrap.Modal(modalAvisEl);
   }
@@ -382,52 +372,52 @@
     }
 
     container.innerHTML = `
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>N°</th>
-                            <th>Auteur / Email</th>
-                            <th>Note</th>
-                            <th>Commentaire</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${avisList
-                          .map((a) => {
-                            const noteStars =
-                              "★".repeat(a.note || 0) +
-                              "☆".repeat(Math.max(0, 5 - (a.note || 0)));
-                            const descriptionCourte =
-                              a.description && a.description.length > 50
-                                ? a.description.substring(0, 50) + "..."
-                                : a.description || "—";
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>N°</th>
+              <th>Auteur / Email</th>
+              <th>Note</th>
+              <th>Commentaire</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${avisList
+              .map((a) => {
+                const noteStars =
+                  "★".repeat(a.note || 0) +
+                  "☆".repeat(Math.max(0, 5 - (a.note || 0)));
+                const descriptionCourte =
+                  a.description && a.description.length > 50
+                    ? a.description.substring(0, 50) + "..."
+                    : a.description || "—";
 
-                            return `
-                                <tr>
-                                    <td class="fw-bold">#${a.id}</td>
-                                    <td>
-                                        <div>${a.user?.prenom ?? a.nom_auteur ?? "Anonyme"}</div>
-                                        <small class="text-muted">${a.user?.email ?? ""}</small>
-                                    </td>
-                                    <td class="text-warning fw-bold" title="${a.note}/5">${noteStars}</td>
-                                    <td>${descriptionCourte}</td>
-                                    <td>${getAvisStatutBadge(a.statut)}</td>
-                                    <td>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="openAvisModal(${a.id})">
-                                            Modérer
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
-                          })
-                          .join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
+                return `
+                  <tr>
+                    <td class="fw-bold">#${a.id}</td>
+                    <td>
+                      <div>${a.user?.prenom ?? a.nom_auteur ?? "Anonyme"}</div>
+                      <small class="text-muted">${a.user?.email ?? ""}</small>
+                    </td>
+                    <td class="text-warning fw-bold" title="${a.note}/5">${noteStars}</td>
+                    <td>${descriptionCourte}</td>
+                    <td>${getAvisStatutBadge(a.statut)}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-primary" onclick="openAvisModal(${a.id})">
+                        Modérer
+                      </button>
+                    </td>
+                  </tr>
+                `;
+              })
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
   }
 
   window.openAvisModal = (id) => {
@@ -514,9 +504,9 @@
     return `<span class="badge bg-warning text-dark">En attente</span>`;
   }
 
-  
   // 4. MODULE MENUS
-  
+  let rawMenus = [];
+
   async function loadMenus() {
     const container = document.getElementById("carte-menus-container");
     const countBadge = document.getElementById("count-menus");
@@ -527,38 +517,36 @@
         headers,
       });
 
-      if (!response.ok) {
-        throw new Error("Erreur HTTP " + response.status);
-      }
+      if (!response.ok) throw new Error("Erreur HTTP " + response.status);
 
       const data = await response.json();
       const menus = data["hydra:member"] ?? data;
       rawMenus = menus;
 
-      // Mettre à jour le compteur dans l'onglet
       if (countBadge)
         countBadge.textContent = Array.isArray(menus) ? menus.length : 0;
 
-      // Si aucun menu n'est renvoyé
       if (!container) return;
       if (!Array.isArray(menus) || menus.length === 0) {
         container.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center text-muted py-4">
-                            Aucun menu enregistré en base de données.
-                        </td>
-                    </tr>`;
+          <tr>
+            <td colspan="7" class="text-center text-muted py-4">
+              Aucun menu enregistré en base de données.
+            </td>
+          </tr>`;
         return;
       }
 
-      // Générer les lignes HTML du tableau
       container.innerHTML = await Promise.all(
         menus.map(async (menu) => {
           let imageSrc = "../images/entrepriseImg1.jpg";
           try {
             const imgResponse = await fetch(
               `http://127.0.0.1:8000/api/image-menu/menu/${menu.id}`,
-              { method: "GET", headers },
+              {
+                method: "GET",
+                headers,
+              },
             );
             if (imgResponse.ok) {
               const images = await imgResponse.json();
@@ -579,44 +567,65 @@
               : '<em class="text-muted small">Aucun plat associé</em>';
 
           return `
-        <tr>
-            <td>
+            <tr>
+              <td>
                 <img src="${imageSrc}" class="rounded border" style="width: 50px; height: 50px; object-fit: cover;" alt="${menu.titre}">
-            </td>
-            <td><span class="fw-bold d-block">${menu.titre}</span></td>
-            <td><span class="badge bg-secondary">${menu.regime ?? "Non spécifié"}</span></td>
-            <td>${platsBadges}</td>
-            <td class="fw-bold text-success">${Number(menu.prix_par_personne || 0).toFixed(2)} €</td>
-            <td>
+              </td>
+              <td><span class="fw-bold d-block">${menu.titre}</span></td>
+              <td><span class="badge bg-secondary">${menu.regime ?? "Non spécifié"}</span></td>
+              <td>${platsBadges}</td>
+              <td class="fw-bold text-success">${Number(menu.prix_par_personne || 0).toFixed(2)} €</td>
+              <td>
                 <span class="badge ${menu.quantite_restante > 5 ? "bg-success" : "bg-danger"}">
-                    ${menu.quantite_restante ?? 0} dispo
+                  ${menu.quantite_restante ?? 0} dispo
                 </span>
-            </td>
-            <td class="text-end">
+              </td>
+              <td class="text-end">
                 <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditMenuModal(${menu.id})">Éditer</button>
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteMenu(${menu.id})">Supprimer</button>
-            </td>
-        </tr>
-    `;
+              </td>
+            </tr>
+          `;
         }),
       ).then((rows) => rows.join(""));
     } catch (error) {
       console.error("Erreur lors du chargement des menus :", error);
       if (container) {
         container.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="text-center text-danger py-4">
-                            Impossible de charger la liste des menus depuis le serveur.
-                        </td>
-                    </tr>`;
+          <tr>
+            <td colspan="7" class="text-center text-danger py-4">
+              Impossible de charger la liste des menus depuis le serveur.
+            </td>
+          </tr>`;
       }
     }
   }
 
-  
-  // MODULE PLATS
-  
+  async function loadThemesSelect() {
+    const select = document.getElementById("menu-theme");
+    if (!select) return;
+
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/theme", { headers });
+      const data = await res.json();
+      const themes = data["hydra:member"] ?? data;
+
+      select.innerHTML =
+        '<option value="">-- Sélectionner un thème --</option>';
+      themes.forEach((t) => {
+        const option = document.createElement("option");
+        option.value = t.id;
+        option.textContent = t.libelle ?? t.nom;
+        select.appendChild(option);
+      });
+    } catch (err) {
+      console.error("Erreur lors du chargement des thèmes :", err);
+    }
+  }
+
+  // 5. MODULE PLATS
   let rawPlats = [];
+  let rawAllergenes = [];
 
   async function loadPlats() {
     const container = document.getElementById("carte-plats-container");
@@ -639,14 +648,14 @@
 
       if (rawPlats.length === 0) {
         container.innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center text-muted py-4">
-                        Aucun plat enregistré.
-                    </td>
-                </tr>`;
+          <tr>
+            <td colspan="5" class="text-center text-muted py-4">
+              Aucun plat enregistré.
+            </td>
+          </tr>`;
         return;
       }
-      const imgSrc = "../images/entrepriseImg1.jpg";
+
       container.innerHTML = rawPlats
         .map((plat) => {
           const allergenes =
@@ -660,31 +669,30 @@
               : '<em class="text-muted small">Aucun</em>';
 
           return `
-                <tr>
-                    <td>
-                        <img src="imgSrc" 
-                             class="rounded border" 
-                             style="width: 50px; height: 50px; object-fit: cover;" 
-                             alt="${plat.titre_plat}"
-                             onerror="this.src='../images/entrepriseImg1.jpg'">
-                    </td>
-                    <td class="fw-bold">${plat.titre_plat}</td>
-                    <td><span class="badge bg-primary">${plat.type ?? "—"}</span></td>
-                    <td>${allergenes}</td>
-                    <td class="text-end">
-                        <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditPlatModal(${plat.id})">
-                            Éditer
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger" onclick="deletePlat(${plat.id})">
-                            Supprimer
-                        </button>
-                    </td>
-                </tr>
-            `;
+            <tr>
+              <td>
+                <img src="${plat.photo || "../images/entrepriseImg1.jpg"}" 
+                     class="rounded border" 
+                     style="width: 50px; height: 50px; object-fit: cover;" 
+                     alt="${plat.titre_plat}"
+                     onerror="this.src='../images/entrepriseImg1.jpg'">
+              </td>
+              <td class="fw-bold">${plat.titre_plat}</td>
+              <td><span class="badge bg-primary">${plat.type ?? "—"}</span></td>
+              <td>${allergenes}</td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-1" onclick="openEditPlatModal(${plat.id})">
+                  Éditer
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deletePlat(${plat.id})">
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+          `;
         })
         .join("");
 
-      // Remplir aussi le select des plats dans la modale menu
       const selectPlats = document.getElementById("menu-plats");
       if (selectPlats) {
         selectPlats.innerHTML = rawPlats
@@ -698,11 +706,11 @@
       console.error("Erreur plats :", error);
       if (container) {
         container.innerHTML = `
-                <tr>
-                    <td colspan="5" class="text-center text-danger py-4">
-                        Impossible de charger les plats.
-                    </td>
-                </tr>`;
+          <tr>
+            <td colspan="5" class="text-center text-danger py-4">
+              Impossible de charger les plats.
+            </td>
+          </tr>`;
       }
     }
   }
@@ -711,10 +719,16 @@
     document.getElementById("plat-id").value = "";
     document.getElementById("form-plat")?.reset();
 
-    // Remplir le select allergènes
     const selectAllergenes = document.getElementById("plat-allergenes");
     if (selectAllergenes) {
-      // À compléter 
+      selectAllergenes.innerHTML = rawAllergenes.length
+        ? rawAllergenes
+            .map(
+              (allergene) =>
+                `<option value="${allergene.id}">${allergene.libelle}</option>`,
+            )
+            .join("")
+        : `<option value="" disabled>Aucun allergène disponible</option>`;
     }
 
     if (id) {
@@ -726,6 +740,13 @@
         document.getElementById("plat-description").value =
           plat.description ?? "";
         document.getElementById("plat-photo").value = plat.photo ?? "";
+
+        const selectedAllergenes = (plat.allergenes ?? []).map((allergene) =>
+          String(allergene.id),
+        );
+        Array.from(selectAllergenes?.options ?? []).forEach((option) => {
+          option.selected = selectedAllergenes.includes(option.value);
+        });
       }
     }
 
@@ -765,6 +786,9 @@
         type: document.getElementById("plat-type").value,
         description: document.getElementById("plat-description").value,
         photo: document.getElementById("plat-photo").value,
+        allergenes: Array.from(
+          document.getElementById("plat-allergenes")?.selectedOptions ?? [],
+        ).map((option) => `/api/allergenes/${option.value}`),
       };
 
       try {
@@ -787,12 +811,8 @@
       }
     });
 
- 
-  // MODALE MENU (Créer Éditer)
-
-  let rawMenus = [];
+  // MODALE MENU (Instanciation basée sur ton id "openEditMenuModal")
   let modalMenuInstance = null;
-
   const modalMenuEl = document.getElementById("openEditMenuModal");
   if (modalMenuEl && typeof bootstrap !== "undefined") {
     modalMenuInstance = new bootstrap.Modal(modalMenuEl);
@@ -803,11 +823,11 @@
     document.getElementById("form-menu")?.reset();
 
     if (id) {
-      // Mode édition pré-remplir le formulaire
       const menu = rawMenus.find((m) => m.id === id);
       if (menu) {
-        document.getElementById("modalMenuTitle").textContent =
-          "Modifier le menu";
+        const modalTitle = document.getElementById("modalMenuTitle");
+        if (modalTitle) modalTitle.textContent = "Modifier le menu";
+
         document.getElementById("menu-id").value = menu.id;
         document.getElementById("menu-titre").value = menu.titre ?? "";
         document.getElementById("menu-prix").value =
@@ -820,10 +840,20 @@
           menu.nombre_personne_minimum ?? 1;
         document.getElementById("menu-temps-prep").value =
           menu.tempsPreparation ?? 30;
+
+        if (menu.theme?.id) {
+          document.getElementById("menu-theme").value = menu.theme.id;
+        }
+
+        const selectPlats = document.getElementById("menu-plats");
+        const selectedPlatIds = (menu.plats ?? []).map((p) => String(p.id));
+        Array.from(selectPlats?.options ?? []).forEach((opt) => {
+          opt.selected = selectedPlatIds.includes(opt.value);
+        });
       }
     } else {
-      document.getElementById("modalMenuTitle").textContent =
-        "Créer un nouveau menu";
+      const modalTitle = document.getElementById("modalMenuTitle");
+      if (modalTitle) modalTitle.textContent = "Créer un nouveau menu";
     }
 
     modalMenuInstance?.show();
@@ -856,290 +886,65 @@
         ? `http://127.0.0.1:8000/api/menu/${id}`
         : "http://127.0.0.1:8000/api/menu";
 
+      const selectedPlats = Array.from(
+        document.getElementById("menu-plats").selectedOptions,
+      ).map((option) => `/api/plat/${option.value}`);
+
+      const selectedTheme = document.getElementById("menu-theme").value;
+
+      if (!selectedTheme || selectedPlats.length === 0) {
+        alert("Veuillez sélectioner un thème et au moins un plat.");
+        return;
+      }
+      const prixInput = document.getElementById("menu-prix");
       const menuBody = {
         titre: document.getElementById("menu-titre").value,
-        prix_par_personne: parseFloat(
-          document.getElementById("menu-prix").value,
-        ),
         description: document.getElementById("menu-description").value,
         quantite_restante: parseInt(
           document.getElementById("menu-quantite").value,
+          10,
         ),
+        prix_par_personne: String(document.getElementById("menu-prix").value),
         nombre_personne_minimum: parseInt(
           document.getElementById("menu-min-pers").value,
+          10,
         ),
-        plats: parseInt(document.getElementById("menu-plats").value),
-        theme: parseInt(document.getElementById("menu-theme").value),
-        temps_preparation_minimum: parseInt(
+        temps_preparation: parseInt(
           document.getElementById("menu-temps-prep").value,
+          10,
         ),
-        regime: document.getElementById("menu-regime").value,
+        theme: `/api/theme/${selectedTheme}`,
+        plats: selectedPlats,
       };
-      const regimeVal = document.getElementById("menu-regime")?.value;
-      if (regimeVal) menuBody.regime = regimeVal;
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/menu/${id}`, {
+        const response = await fetch(url, {
           method,
           headers,
           body: JSON.stringify(menuBody),
         });
+        console.log("body envoyé :", JSON.stringify(menuBody));
 
-        const menuCreé = await response.json();
-        const menuId = menuCreé.id ?? id;
-
-        // 2. Upload de l'image si un fichier est sélectionné
-        const fileInput = document.getElementById("menu-image");
-        if (fileInput?.files?.length > 0) {
-          const formData = new FormData();
-          formData.append("image", fileInput.files[0]);
-          formData.append("menu_id", menuId);
-
-          await fetch("http://127.0.0.1:8000/api/image-menu", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "X-AUTH-TOKEN": token,
-            },
-            body: formData,
-          });
+        if (response.ok) {
+          modalMenuInstance?.hide();
+          loadMenus();
+        } else {
+          const err = await response.json();
+          alert(
+            err.detail ??
+              err.message ??
+              "Erreur lors de l'enregistrement du menu.",
+          );
         }
-
-        const modalMenuEl = document.getElementById("openEditMenuModal");
-        bootstrap.Modal.getInstance(modalMenuEl)?.hide();
-        loadMenus();
       } catch (e) {
         console.error(e);
       }
     });
 
-  
-  // 5. MODULE RÉGIMES & ALLERGÈNES
-  
-  let rawRegimes = [];
-  let modalRegimeInstance = null;
-
-  const modalRegimeEl = document.getElementById("modalRegime");
-  if (modalRegimeEl && typeof bootstrap !== "undefined") {
-    modalRegimeInstance = new bootstrap.Modal(modalRegimeEl);
-  }
-
-  async function fetchRegimes() {
-    const container = document.getElementById("regimes-container");
-    if (!container) return;
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/regime", {
-        method: "GET",
-        headers: headers,
-      });
-
-      if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
-
-      const data = await response.json();
-      rawRegimes = data["hydra:member"] ?? data;
-
-      renderRegimesTable(rawRegimes);
-    } catch (e) {
-      console.error(e);
-      container.innerHTML =
-        "<p class='text-danger py-3'>Erreur lors du chargement des régimes et allergènes.</p>";
-    }
-  }
-
-  /*  async function fetchThemes() {
-        const container = document.getElementById("menu-theme");
-        if (!container) return;
-
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/theme", {
-                method: "GET",
-                headers: headers
-            });
-
-            if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
-
-            const data = await response.json();
-            rawTheme = data["hydra:member"] ?? data;
-
-            renderRegimesTable(rawTheme);
-        } catch (e) {
-            console.error(e);
-            container.innerHTML = "<p class='text-danger py-3'>Erreur lors du chargement des thèmes et allergènes.</p>";
-        }
-    }*/
-
-  function renderRegimesTable(list) {
-    const container = document.getElementById("regimes-container");
-    if (!container) return;
-
-    if (list.length === 0) {
-      container.innerHTML =
-        "<p class='text-muted py-3'>Aucun régime ou allergène enregistré.</p>";
-      return;
-    }
-
-    container.innerHTML = `
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Nom</th>
-                            <th>Type</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${list
-                          .map(
-                            (item) => `
-                            <tr>
-                                <td>${item.id}</td>
-                                <td class="fw-bold">${item.nom ?? item.libelle ?? "—"}</td>
-                                <td>
-                                    <span class="badge ${item.type === "allergene" ? "bg-danger" : "bg-info"}">
-                                        ${item.type === "allergene" ? "Allergène" : "Régime"}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-warning me-1" onclick="openRegimeModal(${item.id})">
-                                        Éditer
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" onclick="deleteRegime(${item.id})">
-                                        Supprimer
-                                    </button>
-                                </td>
-                            </tr>
-                        `,
-                          )
-                          .join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
-  }
-
-  window.openRegimeModal = (id = null) => {
-    document.getElementById("regime-error")?.classList.add("d-none");
-
-    if (id) {
-      const item = rawRegimes.find((r) => r.id === id);
-      if (!item) return;
-
-      document.getElementById("modalRegimeTitle").textContent =
-        "Modifier le régime / allergène";
-      document.getElementById("regime-id").value = item.id;
-      document.getElementById("regime-nom").value =
-        item.nom ?? item.libelle ?? "";
-      document.getElementById("regime-type").value = item.type ?? "regime";
-    } else {
-      document.getElementById("modalRegimeTitle").textContent =
-        "Ajouter un régime / allergène";
-      document.getElementById("form-regime")?.reset();
-      document.getElementById("regime-id").value = "";
-    }
-
-    modalRegimeInstance?.show();
-  };
-
-  document
-    .getElementById("form-regime")
-    ?.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const id = document.getElementById("regime-id").value;
-      const nom = document.getElementById("regime-nom").value.trim();
-      const type = document.getElementById("regime-type").value;
-      const errorEl = document.getElementById("regime-error");
-
-      errorEl?.classList.add("d-none");
-
-      const method = id ? "PUT" : "POST";
-      const url = id
-        ? `http://127.0.0.1:8000/api/regime/${id}`
-        : "http://127.0.0.1:8000/api/regime";
-
-      try {
-        const response = await fetch(url, {
-          method: method,
-          headers: headers,
-          body: JSON.stringify({ nom, type }),
-        });
-
-        if (response.ok) {
-          modalRegimeInstance?.hide();
-          fetchRegimes();
-        } else {
-          const errData = await response.json();
-          if (errorEl) {
-            errorEl.textContent =
-              errData.detail ??
-              errData.message ??
-              "Erreur lors de l'enregistrement.";
-            errorEl.classList.remove("d-none");
-          }
-        }
-      } catch (err) {
-        console.error(err);
-        if (errorEl) {
-          errorEl.textContent = "Erreur de connexion au serveur.";
-          errorEl.classList.remove("d-none");
-        }
-      }
-    });
-
-  window.deleteRegime = async (id) => {
-    if (!confirm("Voulez-vous vraiment supprimer cet élément ?")) return;
-
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/regime/${id}`, {
-        method: "DELETE",
-        headers,
-      });
-
-      if (response.ok || response.status === 204) {
-        fetchRegimes();
-      } else {
-        alert("Impossible de supprimer cet élément.");
-      }
-    } catch (e) {
-      console.error(e);
-      alert("Erreur de connexion.");
-    }
-  };
-
-  async function loadRegimesSelect() {
-    const select = document.getElementById("menu-regime");
-    if (!select) return;
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/regime", {
-        method: "GET",
-        headers,
-      });
-
-      if (!response.ok) return;
-
-      const data = await response.json();
-      const regimes = data["hydra:member"] ?? data;
-
-      // Option vide — optionnel
-      select.innerHTML = `<option value="">-- Aucun régime --</option>`;
-      regimes.forEach((r) => {
-        select.innerHTML += `<option value="${r.libelle}">${r.libelle}</option>`;
-      });
-    } catch (e) {
-      console.error("Erreur régimes :", e);
-    }
-  }
-  
-  // INITIALISATION & CHARGEMENT INITIAL
-  
-  fetchCommandes();
-  fetchAvis();
-  loadMenus();
-  loadPlats();
-  fetchRegimes();
-  loadRegimesSelect();
+  // INITIALISATION
+  await fetchCommandes();
+  await fetchAvis();
+  await loadThemesSelect();
+  await loadPlats();
+  await loadMenus();
 })();

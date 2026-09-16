@@ -1,8 +1,10 @@
 (async () => {
   let allMenus = [];
-  const myHeaders = new Headers();
-  myHeaders.append("Accept", "application/json");
-  myHeaders.append("X-AUTH-TOKEN", getToken());
+  const token = typeof getToken === "function" ? getToken() : null;
+  const myHeaders = {
+    Accept: "application/json",
+    ...(token ? { "X-AUTH-TOKEN": token } : {}),
+  };
 
   const filtersState = {
     theme: "",
@@ -21,7 +23,8 @@
         headers: myHeaders,
       });
       if (!response.ok) throw new Error("Erreur API");
-      allMenus = await response.json();
+      const data = await response.json();
+      allMenus = data["hydra:member"] ?? data;
       applyFilters();
     } catch (error) {
       console.error("Erreur :", error);
@@ -65,7 +68,7 @@
       return;
     }
 
-    menus.forEach((menu) => {
+    menus.forEach((menu, index) => {
       const premiereImage = menu.imageMenus?.[0]?.ImageMenu ?? null;
       const imgSrc = premiereImage
         ? `http://127.0.0.1:8000/uploads/menus/${premiereImage}`
@@ -74,15 +77,21 @@
       wrapper.insertAdjacentHTML(
         "beforeend",
         `
-                <div class="menu-card">
+                <article class="featured-menu-card">
+                  <div class="featured-menu-media">
+                    <span class="featured-menu-index">${String(index + 1).padStart(2, "0")}</span>
                     <img src="${imgSrc}" alt="${menu.titre}"/>
-                    <div class="menu-card-body">
-                        <span class="menu-tag">${menu.titre}</span>
-                        <p>${menu.description}</p>
-                        <p><strong>${menu.prix_par_personne}€</strong> / personne <i class="bi bi-person-fill"></i></p>
-                        <a href="/menuDetail?id=${menu.id}" onclick="route(event)" class="btn btn-secondary mt-2 text-white">Voir le menu</a>
+                  </div>
+                  <div class="featured-menu-content">
+                    <span class="featured-menu-kicker">Menu Vite & Gourmand</span>
+                    <h3>${menu.titre}</h3>
+                    <p>${menu.description || "Découvrez ce menu traiteur."}</p>
+                    <div class="featured-menu-footer">
+                      <strong>${menu.prix_par_personne ?? "—"} € <small>/ personne</small></strong>
+                      <a href="/menuDetail?id=${menu.id}" onclick="route(event)" class="featured-menu-link">Voir le menu <span aria-hidden="true">→</span></a>
                     </div>
-                </div>
+                    </div>
+                </article>
             `,
       );
     });

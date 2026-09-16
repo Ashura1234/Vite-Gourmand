@@ -58,30 +58,26 @@ function showAndHideElement() {
   const userConnected = isConnected();
   const role = getRole();
 
-  let allElementToEdit = document.querySelectorAll("[data-show]");
+  const roles = role ? role.split(",").map((value) => value.trim()) : [];
+  const isAdmin = roles.includes("ROLE_ADMIN") || roles.includes("admin");
+  const isEmployee =
+    roles.includes("employe") ||
+    roles.includes("employé") ||
+    roles.includes("ROLE_EMPLOYE") ||
+    roles.includes("ROLE_EMPLOYEE");
+
+  const allElementToEdit = document.querySelectorAll("[data-show]");
   allElementToEdit.forEach((element) => {
-    switch (element.dataset.show) {
-      case "disconnected":
-        if (userConnected) {
-          element.classList.add("d-none");
-        }
-        break;
-      case "connected":
-        if (!userConnected) {
-          element.classList.add("d-none");
-        }
-        break;
-      case "employe":
-        if (!userConnected || role != "employe") {
-          element.classList.add("d-none");
-        }
-        break;
-      case "admin":
-        if (!userConnected || role != "ROLE_ADMIN") {
-          element.classList.add("d-none");
-        }
-        break;
-    }
+    const rules = element.dataset.show.split(",").map((value) => value.trim());
+    const visible = rules.some((rule) => {
+      if (rule === "disconnected") return !userConnected;
+      if (rule === "connected") return userConnected;
+      if (rule === "admin") return userConnected && isAdmin;
+      if (rule === "employe") return userConnected && isEmployee;
+      return false;
+    });
+
+    element.classList.toggle("d-none", !visible);
   });
 }
 

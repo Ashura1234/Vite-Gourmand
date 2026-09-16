@@ -7,37 +7,40 @@
   </head>
   <body>
     <div class="detail-page">
-      <div class="container py-4">
-        <h1 class="text-primary fw-bold" id="menuTitre"></h1>
+      <div class="container py-4 detail-heading">
+        <h1 class="text-secondary fw-bold" id="menuTitre"></h1>
         <div class="d-flex align-items-center gap-2 mt-2">
-          <i class="bi bi-person-fill"></i>
-          <span class="detail-price" id="menuPrix"></span>
+          <i class="bi bi-person-fill bg-secondary"></i>
+          <span class="detail-price text-secondary" id="menuPrix"></span>
         </div>
       </div>
 
-      <div class="container">
-        <div class="detail-img-wrapper">
-          <div class="carousel-menu-img" id="menuImages"></div>
+      <div class="container detail-main">
+        <div class="detail-gallery">
+          <div class="detail-img-wrapper">
+            <div class="carousel-menu-img" id="menuImages"></div>
+          </div>
+          <div class="detail-commander detail-commander-top">
+            <button
+              class="btn btn-hero btn-commander ms-auto"
+              data-bs-toggle="modal"
+              data-bs-target="#modalCommander"
+            >
+              Commander
+            </button>
+          </div>
         </div>
+        <div class="detail-information">
+          <div class="container py-3 detail-tags-section">
+            <div class="detail-tags" id="menuTags"></div>
+          </div>
 
-        <div class="container py-3 mt-3">
-          <div class="detail-tags" id="menuTags"></div>
-        </div>
-
-        <div class="container pb-5">
-          <div id="menuPlats"></div>
-        </div>
-
-        <div class="detail-commander">
-          <button
-            class="btn btn-hero btn-commander"
-            data-bs-toggle="modal"
-            data-bs-target="#modalCommander"
-          >
-            Commander
-          </button>
+          <div class="container pb-5 detail-plats-section text-black">
+            <div id="menuPlats" ></div>
+          </div>
         </div>
       </div>
+
     </div>
 
     <div class="modal fade" id="modalCommander" tabindex="-1" aria-hidden="true">

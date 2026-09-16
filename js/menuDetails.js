@@ -1,4 +1,5 @@
 (async () => {
+  const apiBaseUrl = "http://127.0.0.1:8000";
   const params = new URLSearchParams(window.location.search);
   const menuId = params.get("id");
 
@@ -13,24 +14,22 @@
 
   async function fetchMenuDetail() {
     try {
-      const menuResponse = await fetch(
-        `http://localhost:8000/api/menu/${menuId}`,
-      );
+      const menuResponse = await fetch(`${apiBaseUrl}/api/menu/${menuId}`);
       if (!menuResponse.ok) throw new Error("Menu introuvable");
       const menu = await menuResponse.json();
 
-      const imgResponse = await fetch(
-        `http://localhost:8000/api/image-menu/menu/${menuId}`,
-      );
+      const [imgResponse, platsDetails] = await Promise.all([
+        fetch(`${apiBaseUrl}/api/image-menu/menu/${menuId}`),
+        Promise.all(
+          (menu.plats ?? []).map(async (plat) => {
+            const platResponse = await fetch(
+              `${apiBaseUrl}/api/plat/${plat.id}`,
+            );
+            return platResponse.ok ? await platResponse.json() : null;
+          }),
+        ),
+      ]);
       const images = imgResponse.ok ? await imgResponse.json() : [];
-      const platsDetails = await Promise.all(
-        (menu.plats ?? []).map(async (plat) => {
-          const platResponse = await fetch(
-            `http://localhost:8000/api/plat/${plat.id}`,
-          );
-          return platResponse.ok ? await platResponse.json() : null;
-        }),
-      );
       const plats = platsDetails.filter((p) => p !== null);
 
       afficherDetail(menu, images, plats);
@@ -63,10 +62,10 @@
       .join("");
 
     return `
-      <div class="menu-category-section mb-4">
+      <section class="menu-category-section mb-4">
         <h3 class="h5 border-bottom pb-2 text-warning">${title}</h3>
         ${itemsHtml}
-      </div>
+      </section>
     `;
   }
 
@@ -81,7 +80,7 @@
       images.forEach((img) => {
         menuImages.innerHTML += `
           <img 
-              src="http://localhost:8000/uploads/menus/${img.chemin}" 
+              src="${apiBaseUrl}/uploads/menus/${img.chemin}" 
               class="detail-img img-marker" 
               alt="${menu.titre}"
           />
@@ -130,16 +129,35 @@
 
     if (images.length > 0) {
       document.getElementById("modalImage").src =
-        `http://localhost:8000/uploads/menus/${images[0].chemin}`;
+        `${apiBaseUrl}/uploads/menus/${images[0].chemin}`;
     }
   }
 
   fetchMenuDetail();
 
+  const btnCommander = document.querySelector(
+    '[data-bs-target="#modalCommander"]',
+  );
+  if (btnCommander && typeof getToken === "function" && !getToken()) {
+    btnCommander.removeAttribute("data-bs-toggle");
+    btnCommander.removeAttribute("data-bs-target");
+    btnCommander.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.history.pushState({}, "", "/connexion");
+      window.onpopstate?.();
+    });
+  }
+
   // Gestion de la commande
   const btnValider = document.getElementById("btnValiderCommande");
   if (btnValider) {
     btnValider.addEventListener("click", async () => {
+      if (typeof getToken !== "function" || !getToken()) {
+        window.history.pushState({}, "", "/connexion");
+        window.onpopstate?.();
+        return;
+      }
+
       const datePrestation = document.getElementById(
         "inputDatePrestation",
       ).value;
@@ -164,7 +182,7 @@
       }
 
       try {
-        const response = await fetch("http://localhost:8000/api/commande", {
+        const response = await fetch(`${apiBaseUrl}/api/commande`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
